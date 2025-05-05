@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Công Cụ Tính Lợi Nhuận Shopee Chi Tiết - Vũ Quang Ecommerce</title>
+    <title>Công Cụ Tính Lợi Nhuận Shopee Chi Tiết V2 - Vũ Quang Ecommerce</title>
     <style>
         :root {
             --primary-color: #ee4d2d;
@@ -44,7 +44,7 @@
             padding: 30px 35px;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
-            max-width: 600px; /* Wider for more fields */
+            max-width: 650px; /* Wider for more fields */
             width: 100%;
             margin-top: 30px;
             margin-bottom: 30px;
@@ -60,10 +60,10 @@
 
         .luu-y {
             text-align: center;
-            font-size: 0.9em; /* Make note slightly smaller */
+            font-size: 0.9em;
             color: var(--text-color-light);
             margin-bottom: 25px;
-            background-color: #e9f5e9; /* Light green background */
+            background-color: #e9f5e9;
             padding: 8px 12px;
             border-radius: 4px;
             border: 1px solid #c8e6c9;
@@ -74,6 +74,7 @@
             border-radius: var(--border-radius);
             padding: 15px 20px 20px 20px;
             margin-bottom: 25px;
+            background-color: var(--white); /* Ensure white background */
         }
         legend {
             padding: 0 10px;
@@ -83,7 +84,7 @@
         }
 
         .form-group { margin-bottom: 18px; }
-        .form-group:last-child { margin-bottom: 0; } /* Remove margin from last group in fieldset */
+        .form-group:last-child { margin-bottom: 0; }
 
         label {
             display: block;
@@ -102,7 +103,7 @@
 
         input[type="number"], input[type="text"] {
             width: 100%;
-            padding: 10px 12px; /* Slightly less padding */
+            padding: 10px 12px;
             border: 1px solid var(--border-color);
             border-radius: 6px;
             font-size: 1em;
@@ -118,7 +119,6 @@
              cursor: not-allowed;
          }
 
-
         input[type="checkbox"] {
             margin-right: 8px;
             vertical-align: middle;
@@ -129,25 +129,24 @@
         .checkbox-label {
             display: inline-flex;
             align-items: center;
-            font-weight: normal;
-            color: var(--text-color-light);
+            font-weight: normal; /* Make checkbox labels less bold */
+            color: var(--text-color); /* Normal text color for checkbox label */
             cursor: pointer;
             user-select: none;
-            margin-bottom: 0; /* Align with other groups */
-            margin-top: 5px; /* Add some space above checkbox */
+            margin-bottom: 0;
         }
-         .checkbox-label span { line-height: 1.2; }
-
-        /* Input row for side-by-side fields */
-        .input-row {
+        .checkbox-label span { line-height: 1.2; }
+        /* Add spacing for checkbox groups */
+        .checkbox-group {
             display: flex;
-            gap: 15px;
+            flex-direction: column; /* Stack checkboxes vertically */
+            gap: 10px; /* Space between checkboxes */
+            padding-top: 10px; /* Space above checkboxes */
         }
-        .input-row .form-group {
-             flex: 1; /* Make items share space */
-             margin-bottom: 0; /* Reset margin as it's handled by the row gap */
-         }
 
+
+        .input-row { display: flex; gap: 15px; }
+        .input-row .form-group { flex: 1; margin-bottom: 0; }
 
         button {
             display: block;
@@ -161,7 +160,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: background-color var(--transition-speed) ease, transform 0.1s ease;
-            margin-top: 15px; /* Reduced top margin */
+            margin-top: 15px;
         }
         button:hover { background-color: var(--primary-color-dark); }
         button:active { transform: scale(0.98); }
@@ -246,8 +245,8 @@
              </label>
          </div>
           <div class="form-group">
-                <label for="tyLePhiMall">% Phí Shopee Mall (Nếu có)</label>
-                 <small>Phí dịch vụ Mall (chỉ nhập nếu tick ở trên).</small>
+                <label for="tyLePhiMall">% Phí Shopee Mall (Nếu là Mall)</label>
+                 <small>Phí dịch vụ Mall cộng thêm (chỉ nhập nếu tick ở trên).</small>
                 <input type="number" id="tyLePhiMall" placeholder="VD: 3" step="0.1" value="3.0" required disabled>
                 <div class="error" id="errorPhiMall"></div>
          </div>
@@ -287,6 +286,47 @@
          </div>
     </fieldset>
 
+     <!-- === CHI PHÍ VẬN HÀNH & RỦI RO (% trên Giá Bán) === -->
+    <fieldset>
+        <legend>Vận Hành & Rủi Ro (% trên Giá Bán)</legend>
+        <div class="input-row">
+             <div class="form-group">
+                <label for="tyLeVanHanh">% Phí Vận Hành</label>
+                <small>Kho bãi, nhân sự, điện nước...</small>
+                <input type="number" id="tyLeVanHanh" placeholder="VD: 5" step="0.1" value="0" required>
+                <div class="error" id="errorVanHanh"></div>
+            </div>
+            <div class="form-group">
+                <label for="tyLeBatThuong">% Phí Bất Thường</label>
+                <small>Dự phòng rủi ro, hỏng hóc...</small>
+                <input type="number" id="tyLeBatThuong" placeholder="VD: 2" step="0.1" value="0" required>
+                <div class="error" id="errorBatThuong"></div>
+            </div>
+        </div>
+    </fieldset>
+
+    <!-- === CHƯƠNG TRÌNH SHOPEE (Checkbox) === -->
+    <fieldset>
+        <legend>Chương Trình Shopee</legend>
+        <div class="checkbox-group">
+            <div class="form-group">
+                <label class="checkbox-label" for="useFreeshipXtra">
+                    <input type="checkbox" id="useFreeshipXtra">
+                    <span>Tham gia Freeship Xtra?</span>
+                </label>
+                <small>(Phí ~8%, tối đa 30.000đ/sp - Kiểm tra biểu phí mới nhất)</small>
+            </div>
+             <div class="form-group">
+                <label class="checkbox-label" for="useVoucherXtra">
+                    <input type="checkbox" id="useVoucherXtra">
+                    <span>Tham gia Voucher Xtra?</span>
+                </label>
+                 <small>(Phí ~5%, tối đa 20.000đ/sp - Kiểm tra biểu phí mới nhất)</small>
+            </div>
+        </div>
+    </fieldset>
+
+
      <!-- === CHI PHÍ KHÁC (Cố định / đơn) === -->
     <fieldset>
         <legend>Chi Phí Khác (VNĐ / đơn)</legend>
@@ -318,7 +358,7 @@
             </div>
              <div class="form-group">
                 <label for="chiPhiXuLyHoan">Phí xử lý / đơn hoàn</label>
-                 <small>Phí vận chuyển chiều về, hao hụt...</small>
+                 <small>Phí VC chiều về, hao hụt...</small>
                 <input type="number" id="chiPhiXuLyHoan" placeholder="VD: 15000" step="100" value="0" required>
                 <div class="error" id="errorXuLyHoan"></div>
             </div>
@@ -352,11 +392,17 @@
     const tyLeThueInput = document.getElementById('tyLeThue');
     const isMallCheckbox = document.getElementById('isMall');
     const tyLePhiMallInput = document.getElementById('tyLePhiMall');
-    // Marketing Costs
+    // Marketing Costs %
     const phanTramQuangCaoInput = document.getElementById('phanTramQuangCao');
     const phanTramAffiliateInput = document.getElementById('phanTramAffiliate');
     const phanTramVoucherInput = document.getElementById('phanTramVoucher');
     const phanTramMktKhacInput = document.getElementById('phanTramMktKhac');
+    // Ops & Risk Costs %
+    const tyLeVanHanhInput = document.getElementById('tyLeVanHanh');
+    const tyLeBatThuongInput = document.getElementById('tyLeBatThuong');
+    // Shopee Programs
+    const useFreeshipXtraCheckbox = document.getElementById('useFreeshipXtra');
+    const useVoucherXtraCheckbox = document.getElementById('useVoucherXtra');
     // Other Costs (Fixed)
     const chiPhiDongGoiInput = document.getElementById('chiPhiDongGoi');
     const chiPhiMktCoDinhInput = document.getElementById('chiPhiMktCoDinh');
@@ -378,15 +424,26 @@
     const errorAffiliate = document.getElementById('errorAffiliate');
     const errorVoucher = document.getElementById('errorVoucher');
     const errorMktKhac = document.getElementById('errorMktKhac');
+    const errorVanHanh = document.getElementById('errorVanHanh');
+    const errorBatThuong = document.getElementById('errorBatThuong');
+    // No direct error display for checkboxes needed usually
     const errorDongGoi = document.getElementById('errorDongGoi');
     const errorMktCoDinh = document.getElementById('errorMktCoDinh');
     const errorTyLeHoan = document.getElementById('errorTyLeHoan');
     const errorXuLyHoan = document.getElementById('errorXuLyHoan');
 
     // --- Constants ---
-    const TYLE_VAT_QUANG_CAO = 0.10; // 10% VAT on Shopee Ads Cost
+    const TYLE_VAT_QUANG_CAO = 0.10;
+    const TYLE_FREESHIP_XTRA = 0.08; // 8%
+    const MAX_PHI_FREESHIP_XTRA = 30000; // 30k VND
+    const TYLE_VOUCHER_XTRA = 0.05; // 5%
+    const MAX_PHI_VOUCHER_XTRA = 20000; // 20k VND
 
     // --- Helper Functions ---
+    function formatCurrency(value) { /* ... (same as before) ... */ }
+    function clearErrors() { /* ... (same as before, but include new error ids) ... */ }
+    function validateInput(inputElement, errorElement, message, allowZero = false, isPositive = false) { /* ... (same as before) ... */ }
+    // Need to update these two functions
     function formatCurrency(value) {
         const numValue = Number(value);
         if (isNaN(numValue)) { return 'Lỗi'; }
@@ -399,6 +456,12 @@
     }
 
     function validateInput(inputElement, errorElement, message, allowZero = false, isPositive = false) {
+        // Skip validation if the element is disabled (like % Phi Mall when checkbox is off)
+        if (inputElement.disabled) {
+            errorElement.textContent = ''; // Clear any previous error
+            return true;
+        }
+
         const valueStr = inputElement.value.trim();
         const valueNum = parseFloat(valueStr);
         let isValid = true;
@@ -412,30 +475,30 @@
         } else if (valueNum < 0) {
             errorElement.textContent = message + ' không được âm.';
             isValid = false;
-        } else if (!allowZero && valueNum === 0) {
-            // Specific check like Gia Ban > 0 handled separately if needed
         } else if (isPositive && valueNum <= 0) {
              errorElement.textContent = message + ' phải là số dương.';
              isValid = false;
         }
 
-        // Special case for percentage inputs that default to 0 but might have invalid original input
-        if (inputElement.type === 'number' && inputElement.step === '0.1' && valueNum === 0 && valueStr !== '0' && valueStr !== '') {
-             if (isNaN(parseFloat(valueStr)) || parseFloat(valueStr) < 0) {
-                 // Keep the specific error if the original input was bad
-             }
-         }
+        // Handle cases where default 0 is used but original input might be invalid text
+        if (valueNum === 0 && valueStr !== '0' && valueStr !== '' && isNaN(parseFloat(valueStr))) {
+             errorElement.textContent = 'Vui lòng nhập số hợp lệ.';
+             isValid = false; // Treat non-numeric input as invalid even if defaulted to 0
+        }
 
         return isValid;
     }
+
 
     // --- Event Listener for Mall Checkbox ---
     isMallCheckbox.addEventListener('change', function() {
         tyLePhiMallInput.disabled = !this.checked;
         if (!this.checked) {
-            tyLePhiMallInput.value = ''; // Clear value when disabled
-            errorPhiMall.textContent = ''; // Clear error
+            // tyLePhiMallInput.value = ''; // Keep default value, just disable
+            errorPhiMall.textContent = '';
         }
+        // Optional: Trigger recalculation immediately
+        // tinhLoiNhuan();
     });
 
     // --- Main Calculation Function ---
@@ -447,11 +510,12 @@
 
         // 2. Validate ALL Inputs
         let formIsValid = true;
-        formIsValid &= validateInput(giaNhapInput, errorGiaNhap, "Giá nhập", true); // Allow zero
+        formIsValid &= validateInput(giaNhapInput, errorGiaNhap, "Giá nhập", true);
         formIsValid &= validateInput(giaBanInput, errorGiaBan, "Giá bán", false, true); // Must be positive
         formIsValid &= validateInput(tyLePhiCoDinhInput, errorPhiCoDinh, "% Phí cố định", true);
         formIsValid &= validateInput(tyLePhiThanhToanInput, errorPhiThanhToan, "% Phí thanh toán", true);
         formIsValid &= validateInput(tyLeThueInput, errorThue, "% Thuế", true);
+        // Only validate Mall fee if checkbox is checked
         if (isMallCheckbox.checked) {
             formIsValid &= validateInput(tyLePhiMallInput, errorPhiMall, "% Phí Mall", true);
         }
@@ -459,21 +523,22 @@
         formIsValid &= validateInput(phanTramAffiliateInput, errorAffiliate, "% Affiliate", true);
         formIsValid &= validateInput(phanTramVoucherInput, errorVoucher, "% Voucher/KM", true);
         formIsValid &= validateInput(phanTramMktKhacInput, errorMktKhac, "% MKT khác", true);
+        formIsValid &= validateInput(tyLeVanHanhInput, errorVanHanh, "% Vận Hành", true); // New field
+        formIsValid &= validateInput(tyLeBatThuongInput, errorBatThuong, "% Bất Thường", true); // New field
         formIsValid &= validateInput(chiPhiDongGoiInput, errorDongGoi, "Chi phí đóng gói", true);
         formIsValid &= validateInput(chiPhiMktCoDinhInput, errorMktCoDinh, "Chi phí MKT cố định", true);
         formIsValid &= validateInput(tyLeHoanInput, errorTyLeHoan, "% Tỷ lệ hoàn", true);
         formIsValid &= validateInput(chiPhiXuLyHoanInput, errorXuLyHoan, "Chi phí xử lý hoàn", true);
 
-
         if (!formIsValid) {
              ketQuaTrucTiepDiv.textContent = 'Vui lòng kiểm tra lại các ô nhập liệu.';
-             ketQuaTrucTiepDiv.classList.add('result-negative'); // Indicate error state
+             ketQuaTrucTiepDiv.classList.add('result-negative');
             return;
         }
 
-        // 3. Get Validated Values (defaulting to 0 just in case, though validation should prevent NaNs)
+        // 3. Get Validated Values
         const giaNhap = parseFloat(giaNhapInput.value) || 0;
-        const giaBan = parseFloat(giaBanInput.value) || 0; // Already validated > 0
+        const giaBan = parseFloat(giaBanInput.value) || 0;
         const tyLePhiCoDinh = (parseFloat(tyLePhiCoDinhInput.value) || 0) / 100;
         const tyLePhiThanhToan = (parseFloat(tyLePhiThanhToanInput.value) || 0) / 100;
         const tyLeThue = (parseFloat(tyLeThueInput.value) || 0) / 100;
@@ -482,10 +547,15 @@
         const phanTramAffiliate = (parseFloat(phanTramAffiliateInput.value) || 0) / 100;
         const phanTramVoucher = (parseFloat(phanTramVoucherInput.value) || 0) / 100;
         const phanTramMktKhac = (parseFloat(phanTramMktKhacInput.value) || 0) / 100;
+        const tyLeVanHanh = (parseFloat(tyLeVanHanhInput.value) || 0) / 100; // New field
+        const tyLeBatThuong = (parseFloat(tyLeBatThuongInput.value) || 0) / 100; // New field
+        const useFSX = useFreeshipXtraCheckbox.checked; // New checkbox
+        const useVX = useVoucherXtraCheckbox.checked; // New checkbox
         const chiPhiDongGoi = parseFloat(chiPhiDongGoiInput.value) || 0;
         const chiPhiMktCoDinh = parseFloat(chiPhiMktCoDinhInput.value) || 0;
         const tyLeHoan = (parseFloat(tyLeHoanInput.value) || 0) / 100;
         const chiPhiXuLyHoan = parseFloat(chiPhiXuLyHoanInput.value) || 0;
+
 
         // --- Calculations ---
         // 4. Percentage-Based Costs (on giaBan)
@@ -494,36 +564,51 @@
         const cpThue = giaBan * tyLeThue;
         const cpPhiMall = giaBan * tyLePhiMall;
         const cpQuangCao = giaBan * phanTramQuangCao;
-        const cpVatQuangCao = cpQuangCao * TYLE_VAT_QUANG_CAO; // VAT on Ads cost only
+        const cpVatQuangCao = cpQuangCao * TYLE_VAT_QUANG_CAO;
         const cpAffiliate = giaBan * phanTramAffiliate;
         const cpVoucher = giaBan * phanTramVoucher;
         const cpMktKhacPercent = giaBan * phanTramMktKhac;
+        const cpVanHanh = giaBan * tyLeVanHanh; // New Cost
+        const cpBatThuong = giaBan * tyLeBatThuong; // New Cost
 
-        // 5. Fixed Costs per Order
+        // 5. Shopee Program Costs (with Caps)
+        let cpFSX = 0;
+        if (useFSX) {
+            cpFSX = Math.min(giaBan * TYLE_FREESHIP_XTRA, MAX_PHI_FREESHIP_XTRA);
+        }
+        let cpVX = 0;
+        if (useVX) {
+            cpVX = Math.min(giaBan * TYLE_VOUCHER_XTRA, MAX_PHI_VOUCHER_XTRA);
+        }
+
+        // 6. Fixed Costs per Order
         const cpDongGoi = chiPhiDongGoi;
         const cpMktCoDinh = chiPhiMktCoDinh;
 
-        // 6. Average Return Cost per *Sold* Order
-        // This estimates the cost of returns spread across all orders sold
+        // 7. Average Return Cost per *Sold* Order
         const cpHoanTrungBinh = tyLeHoan * chiPhiXuLyHoan;
 
-        // 7. Total Costs (excluding cost price)
+        // 8. Total Costs (excluding cost price)
         const tongChiPhiTruGiaNhap =
             cpPhiCoDinh + cpPhiThanhToan + cpThue + cpPhiMall + // Platform %
             cpQuangCao + cpVatQuangCao + cpAffiliate + cpVoucher + cpMktKhacPercent + // Marketing %
+            cpVanHanh + cpBatThuong + // Ops & Risk %
+            cpFSX + cpVX +           // Shopee Programs
             cpDongGoi + cpMktCoDinh + // Fixed / Order
-            cpHoanTrungBinh; // Average Return Cost
+            cpHoanTrungBinh;         // Average Return Cost
 
         const tongChiPhiBaoGomGiaGoc = tongChiPhiTruGiaNhap + giaNhap;
 
-        // 8. Calculate Profit
+        // 9. Calculate Profit
         const loiNhuan = giaBan - tongChiPhiBaoGomGiaGoc;
 
-        // 9. Prepare and Display Result
+        // 10. Prepare and Display Result
         let resultHTML = '';
         let resultClass = '';
         let colorClass = '';
 
+        if (loiNhuan > 0) { /* ... (same as before) ... */ } else if (loiNhuan < 0) { /* ... (same as before) ... */ } else { /* ... (same as before) ... */ }
+        // Logic for setting resultHTML, resultClass, colorClass remains the same
         if (loiNhuan > 0) {
             resultClass = 'result-positive';
             colorClass = 'positive';
@@ -538,9 +623,8 @@
             resultHTML = `Hòa vốn ước tính: <span class="${colorClass}">${formatCurrency(loiNhuan)}</span> VNĐ`;
         }
 
-        // Add Total Cost info (optional)
-        resultHTML += `<br><small style="color: var(--text-color-light); font-size: 0.9em;">(Tổng chi phí/đơn: ${formatCurrency(tongChiPhiBaoGomGiaGoc)} VNĐ)</small>`;
 
+        resultHTML += `<br><small style="color: var(--text-color-light); font-size: 0.9em;">(Tổng chi phí/đơn: ${formatCurrency(tongChiPhiBaoGomGiaGoc)} VNĐ)</small>`;
 
         ketQuaTrucTiepDiv.classList.add(resultClass);
         ketQuaTrucTiepDiv.innerHTML = resultHTML;
@@ -548,18 +632,24 @@
 
     // --- Attach Event Listeners ---
     tinhToanBtn.addEventListener('click', tinhLoiNhuan);
-    const numberInputs = document.querySelectorAll('input[type="number"]');
-    numberInputs.forEach(input => {
-        input.addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                tinhToanBtn.click();
-            }
-        });
-        // Optional: Recalculate on input change (can be slow/annoying)
-        // input.addEventListener('input', tinhLoiNhuan);
+    const allInputs = document.querySelectorAll('input[type="number"], input[type="checkbox"]'); // Include checkbox
+    allInputs.forEach(input => {
+         if(input.type === 'number') {
+            input.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    tinhToanBtn.click();
+                }
+            });
+        }
+        // Optional: Recalculate on change for immediate feedback
+        // input.addEventListener('input', tinhLoiNhuan); // For number inputs
+        // input.addEventListener('change', tinhLoiNhuan); // For checkboxes
     });
-     isMallCheckbox.addEventListener('change', tinhLoiNhuan); // Recalculate if Mall status changes
+
+    // Initial calculation on load? Optional.
+    // document.addEventListener('DOMContentLoaded', tinhLoiNhuan);
+
 
 </script>
 
