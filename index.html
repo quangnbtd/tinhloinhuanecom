@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Công Cụ Tính Lợi Nhuận Shopee Chi Tiết V2 - Vũ Quang Ecommerce</title>
+    <title>Công Cụ Tính Lợi Nhuận Shopee Theo Ngành Hàng - Vũ Quang Ecommerce</title>
     <style>
-        :root {
+        /* --- CSS Styles remain largely the same as V2 --- */
+        /* Minor adjustments might be needed for the new select fields */
+         :root {
             --primary-color: #ee4d2d;
             --primary-color-dark: #d73210;
             --success-color: #28a745;
@@ -44,138 +46,65 @@
             padding: 30px 35px;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
-            max-width: 650px; /* Wider for more fields */
+            max-width: 650px;
             width: 100%;
             margin-top: 30px;
             margin-bottom: 30px;
             flex-shrink: 0;
         }
 
-        h1 {
-            text-align: center;
-            color: var(--primary-color);
-            margin-bottom: 15px;
-            font-size: 1.8em;
-        }
+        h1 { text-align: center; color: var(--primary-color); margin-bottom: 15px; font-size: 1.8em; }
+        .luu-y { text-align: center; font-size: 0.9em; color: var(--text-color-light); margin-bottom: 25px; background-color: #e9f5e9; padding: 8px 12px; border-radius: 4px; border: 1px solid #c8e6c9; }
 
-        .luu-y {
-            text-align: center;
-            font-size: 0.9em;
-            color: var(--text-color-light);
-            margin-bottom: 25px;
-            background-color: #e9f5e9;
-            padding: 8px 12px;
-            border-radius: 4px;
-            border: 1px solid #c8e6c9;
-        }
-
-        fieldset {
-            border: 1px solid var(--border-color);
-            border-radius: var(--border-radius);
-            padding: 15px 20px 20px 20px;
-            margin-bottom: 25px;
-            background-color: var(--white); /* Ensure white background */
-        }
-        legend {
-            padding: 0 10px;
-            font-weight: 600;
-            color: var(--primary-color);
-            font-size: 1.1em;
-        }
+        fieldset { border: 1px solid var(--border-color); border-radius: var(--border-radius); padding: 15px 20px 20px 20px; margin-bottom: 25px; background-color: var(--white); }
+        legend { padding: 0 10px; font-weight: 600; color: var(--primary-color); font-size: 1.1em; }
 
         .form-group { margin-bottom: 18px; }
         .form-group:last-child { margin-bottom: 0; }
 
-        label {
-            display: block;
-            margin-bottom: 3px;
-            font-weight: 600;
-            color: var(--text-color-light);
-            font-size: 0.95em;
-        }
-        .form-group small {
-            display: block;
-            font-size: 0.8em;
-            color: var(--note-color);
-            margin-bottom: 8px;
-            line-height: 1.3;
-        }
+        label { display: block; margin-bottom: 5px; /* Increased margin slightly */ font-weight: 600; color: var(--text-color-light); font-size: 0.95em; }
+        .form-group small { display: block; font-size: 0.8em; color: var(--note-color); margin-top: -3px; /* Adjust spacing after label */ margin-bottom: 8px; line-height: 1.3; }
 
-        input[type="number"], input[type="text"] {
+        input[type="number"], input[type="text"], select { /* Added select styling */
             width: 100%;
             padding: 10px 12px;
             border: 1px solid var(--border-color);
             border-radius: 6px;
             font-size: 1em;
             transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+            background-color: var(--white); /* Ensure select has white background */
         }
-        input[type="number"]:focus, input[type="text"]:focus {
+        input[type="number"]:focus, input[type="text"]:focus, select:focus {
             outline: none;
             border-color: var(--primary-color);
             box-shadow: 0 0 0 3px rgba(238, 77, 45, 0.15);
         }
-        input[type="number"]:disabled {
+        input[type="number"]:disabled, select:disabled {
              background-color: #eee;
              cursor: not-allowed;
+             opacity: 0.7;
          }
+        /* Style for the read-only fee display */
+        #phiCoDinhDisplay {
+            font-weight: bold;
+            color: var(--primary-color);
+            padding: 5px 0;
+        }
 
-        input[type="checkbox"] {
-            margin-right: 8px;
-            vertical-align: middle;
-            width: 16px;
-            height: 16px;
-            accent-color: var(--primary-color);
-        }
-        .checkbox-label {
-            display: inline-flex;
-            align-items: center;
-            font-weight: normal; /* Make checkbox labels less bold */
-            color: var(--text-color); /* Normal text color for checkbox label */
-            cursor: pointer;
-            user-select: none;
-            margin-bottom: 0;
-        }
+
+        input[type="checkbox"] { margin-right: 8px; vertical-align: middle; width: 16px; height: 16px; accent-color: var(--primary-color); }
+        .checkbox-label { display: inline-flex; align-items: center; font-weight: normal; color: var(--text-color); cursor: pointer; user-select: none; margin-bottom: 0; }
         .checkbox-label span { line-height: 1.2; }
-        /* Add spacing for checkbox groups */
-        .checkbox-group {
-            display: flex;
-            flex-direction: column; /* Stack checkboxes vertically */
-            gap: 10px; /* Space between checkboxes */
-            padding-top: 10px; /* Space above checkboxes */
-        }
+        .checkbox-group { display: flex; flex-direction: column; gap: 10px; padding-top: 10px; }
 
-
-        .input-row { display: flex; gap: 15px; }
+        .input-row { display: flex; gap: 15px; align-items: flex-start; /* Align items top */ }
         .input-row .form-group { flex: 1; margin-bottom: 0; }
 
-        button {
-            display: block;
-            width: 100%;
-            padding: 14px;
-            background-color: var(--primary-color);
-            color: var(--white);
-            border: none;
-            border-radius: 6px;
-            font-size: 1.1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color var(--transition-speed) ease, transform 0.1s ease;
-            margin-top: 15px;
-        }
+        button { display: block; width: 100%; padding: 14px; background-color: var(--primary-color); color: var(--white); border: none; border-radius: 6px; font-size: 1.1em; font-weight: 600; cursor: pointer; transition: background-color var(--transition-speed) ease, transform 0.1s ease; margin-top: 15px; }
         button:hover { background-color: var(--primary-color-dark); }
         button:active { transform: scale(0.98); }
 
-        #ketQuaTrucTiep {
-            margin-top: 25px;
-            padding: 15px 20px;
-            border-radius: var(--border-radius);
-            background-color: var(--background-color);
-            border: 1px solid var(--border-color);
-            min-height: 2.5em;
-            text-align: center;
-            font-size: 1.1em;
-            line-height: 1.5;
-        }
+        #ketQuaTrucTiep { margin-top: 25px; padding: 15px 20px; border-radius: var(--border-radius); background-color: var(--background-color); border: 1px solid var(--border-color); min-height: 2.5em; text-align: center; font-size: 1.1em; line-height: 1.5; }
         #ketQuaTrucTiep.result-positive { background-color: #f0fff4; border-color: var(--success-color); }
         #ketQuaTrucTiep.result-negative { background-color: #fff5f5; border-color: var(--error-color); }
         #ketQuaTrucTiep.result-zero { background-color: #fffcf0; border-color: var(--warning-color); }
@@ -195,7 +124,7 @@
 <body>
 
 <div class="container">
-    <h1>Công Cụ Tính Lợi Nhuận Shopee Chi Tiết</h1>
+    <h1>Công Cụ Tính Lợi Nhuận Shopee Theo Ngành Hàng</h1>
     <p class="luu-y">Nhập đầy đủ thông tin giá và các loại chi phí dự kiến để ước tính lợi nhuận.</p>
 
     <!-- === THÔNG TIN CƠ BẢN === -->
@@ -215,17 +144,34 @@
         </div>
     </fieldset>
 
-    <!-- === PHÍ SÀN (% trên Giá Bán) === -->
+    <!-- === PHÍ SÀN (Tự động & Nhập liệu) === -->
     <fieldset>
-         <legend>Phí Sàn (% trên Giá Bán)</legend>
+         <legend>Phí Sàn</legend>
+         <!-- Category Selection for Fixed Fee -->
          <div class="input-row">
-             <div class="form-group">
-                <label for="tyLePhiCoDinh">% Phí Cố Định</label>
-                <small>Phí Shopee thu cố định.</small>
-                <input type="number" id="tyLePhiCoDinh" placeholder="VD: 8" step="0.1" value="8.0" required>
-                <div class="error" id="errorPhiCoDinh"></div>
-            </div>
-             <div class="form-group">
+              <div class="form-group">
+                <label for="nganhHangL1">Ngành hàng Cấp 1</label>
+                <select id="nganhHangL1" required>
+                    <option value="">-- Chọn Cấp 1 --</option>
+                </select>
+                <div class="error" id="errorNganhHangL1"></div>
+              </div>
+               <div class="form-group">
+                <label for="nganhHangL2">Ngành hàng Cấp 2</label>
+                <select id="nganhHangL2" required disabled>
+                    <option value="">-- Chọn Cấp 2 --</option>
+                </select>
+                 <div class="error" id="errorNganhHangL2"></div>
+              </div>
+         </div>
+          <div class="form-group">
+              <label>Phí Cố Định (Hoa hồng) tự động:</label>
+              <div id="phiCoDinhDisplay" style="padding-top: 5px;">Chưa chọn ngành hàng</div>
+          </div>
+         <hr style="border: none; border-top: 1px solid #eee; margin: 15px 0;">
+         <!-- Other Platform Fees (Manual Input) -->
+         <div class="input-row">
+            <div class="form-group">
                 <label for="tyLePhiThanhToan">% Phí Thanh Toán</label>
                 <small>Phí giao dịch qua cổng TT.</small>
                 <input type="number" id="tyLePhiThanhToan" placeholder="VD: 4" step="0.1" value="4.0" required>
@@ -238,7 +184,7 @@
                 <div class="error" id="errorThue"></div>
             </div>
          </div>
-          <div class="form-group">
+         <div class="form-group">
              <label class="checkbox-label" for="isMall">
                  <input type="checkbox" id="isMall">
                  <span>Gian hàng là Shopee Mall?</span>
@@ -383,40 +329,95 @@
 </footer>
 
 <script defer>
-    // --- Input Elements ---
+    // --- Category Data ---
+    const categoryData = [
+        { l1: "Máy tính & Laptop", l2: "Máy Tính Bàn", fee: 1.5 }, { l1: "Máy tính & Laptop", l2: "Laptop", fee: 1.5 }, { l1: "Máy tính & Laptop", l2: "Màn Hình", fee: 1.5 },
+        { l1: "Điện Thoại & Phụ Kiện", l2: "Điện thoại", fee: 1.5 }, { l1: "Điện Thoại & Phụ Kiện", l2: "Máy tính bảng", fee: 1.5 },
+        { l1: "Thiết Bị Âm Thanh", l2: "Amply và đầu chỉnh âm", fee: 7.0 }, { l1: "Thiết Bị Âm Thanh", l2: "Cáp âm thanh/ video & Đầu chuyển", fee: 7.0 }, { l1: "Thiết Bị Âm Thanh", l2: "Tai nghe nhét tai & chụp tai", fee: 7.0 }, { l1: "Thiết Bị Âm Thanh", l2: "Dàn âm thanh", fee: 7.0 }, { l1: "Thiết Bị Âm Thanh", l2: "Máy nghe nhạc", fee: 7.0 }, { l1: "Thiết Bị Âm Thanh", l2: "Micro thu âm", fee: 7.0 },
+        { l1: "Cameras & Flycam", l2: "Phụ kiện máy ảnh", fee: 7.0 }, { l1: "Cameras & Flycam", l2: "Phụ kiện chăm sóc máy ảnh", fee: 7.0 }, { l1: "Cameras & Flycam", l2: "Máy ảnh", fee: 7.0 }, { l1: "Cameras & Flycam", l2: "Phụ kiện Flycam", fee: 7.0 }, { l1: "Cameras & Flycam", l2: "Flycam", fee: 7.0 }, { l1: "Cameras & Flycam", l2: "Phụ kiện ống kính", fee: 7.0 }, { l1: "Cameras & Flycam", l2: "Ống kính", fee: 7.0 }, { l1: "Cameras & Flycam", l2: "Camera giám sát", fee: 7.0 },
+        { l1: "Máy tính & Laptop", l2: "Thiết Bị Lưu Trữ", fee: 7.0 }, { l1: "Máy tính & Laptop", l2: "Linh Kiện Máy Tính", fee: 7.0 }, { l1: "Máy tính & Laptop", l2: "Chuột & Bàn Phím", fee: 7.0 }, { l1: "Máy tính & Laptop", l2: "Thiết Bị Mạng", fee: 7.0 }, { l1: "Máy tính & Laptop", l2: "Thiết Bị Văn Phòng", fee: 7.0 }, { l1: "Máy tính & Laptop", l2: "Phụ Kiện Máy Tính", fee: 7.0 }, { l1: "Máy tính & Laptop", l2: "Máy In & Máy Scan", fee: 7.0 }, { l1: "Máy tính & Laptop", l2: "Phần Mềm", fee: 7.0 },
+        { l1: "Gaming & Console", l2: "Phụ kiện console", fee: 7.0 }, { l1: "Gaming & Console", l2: "Máy chơi game", fee: 7.0 }, { l1: "Gaming & Console", l2: "Video Games", fee: 7.0 },
+        { l1: "Thiết Bị Điện Gia Dụng", l2: "Pin", fee: 7.0 }, { l1: "Thiết Bị Điện Gia Dụng", l2: "Mạch điện & Phụ tùng", fee: 7.0 }, { l1: "Thiết Bị Điện Gia Dụng", l2: "Đồ gia dụng nhà bếp", fee: 7.0 }, { l1: "Thiết Bị Điện Gia Dụng", l2: "Thiết bị điện gia dụng lớn", fee: 7.0 }, { l1: "Thiết Bị Điện Gia Dụng", l2: "Máy chiếu & Phụ kiện", fee: 7.0 }, { l1: "Thiết Bị Điện Gia Dụng", l2: "Thiết bị điều khiển từ xa", fee: 7.0 }, { l1: "Thiết Bị Điện Gia Dụng", l2: "Thiết bị điện gia dụng nhỏ", fee: 7.0 }, { l1: "Thiết Bị Điện Gia Dụng", l2: "Tivi & Phụ kiện", fee: 7.0 },
+        { l1: "Thể Thao & Dã Ngoại", l2: "Dụng Cụ Thể Thao & Dã Ngoại", fee: 9.0 }, { l1: "Đồng Hồ", l2: "Đồng hồ nam", fee: 9.0 }, { l1: "Đồng Hồ", l2: "Bộ đồng hồ & Đồng hồ cặp", fee: 9.0 }, { l1: "Đồng Hồ", l2: "Đồng hồ nữ", fee: 9.0 }, { l1: "Du lịch & Hành lý", l2: "Vali", fee: 9.0 },
+        { l1: "Sức Khỏe", l2: "Thực phẩm chức năng", fee: 9.5 }, { l1: "Sức Khỏe", l2: "Vật tư y tế", fee: 9.5 }, { l1: "Sức Khỏe", l2: "Chăm sóc cá nhân", fee: 9.5 },
+        { l1: "Mẹ & Bé", l2: "Đồ dùng du lịch cho bé", fee: 9.0 }, { l1: "Mẹ & Bé", l2: "Đồ dùng ăn dặm cho bé", fee: 9.5 }, { l1: "Mẹ & Bé", l2: "Phụ kiện cho mẹ", fee: 9.5 }, { l1: "Mẹ & Bé", l2: "Chăm sóc sức khỏe mẹ", fee: 9.5 }, { l1: "Mẹ & Bé", l2: "Đồ dùng phòng ngủ cho bé", fee: 9.5 }, { l1: "Mẹ & Bé", l2: "Đồ chơi", fee: 9.5 },
+        { l1: "Ô tô", l2: "Ô tô", fee: 4.0 }, { l1: "Nhà cửa & Đời sống", l2: "Dụng cụ & Thiết bị tiện ích", fee: 9.5 }, { l1: "Mô tô, xe máy", l2: "Mô tô, xe máy", fee: 4.0 },
+        { l1: "Điện Thoại & Phụ Kiện", l2: "Phụ kiện", fee: 9.0 }, { l1: "Điện Thoại & Phụ Kiện", l2: "Thẻ sim", fee: 9.0 }, { l1: "Điện Thoại & Phụ Kiện", l2: "Bộ đàm", fee: 9.0 }, { l1: "Điện Thoại & Phụ Kiện", l2: "Thiết bị đeo thông minh", fee: 9.0 },
+        // Add all Voucher & Dich vu categories with 9.0%
+        ...["Sự kiện & Giải trí", "Nhà hàng & Ăn uống", "Mua sắm", "Thanh toán hóa đơn", "Dịch vụ khác", "Sức khỏe & Làm đẹp", "Gọi xe", "Khóa học", "Nạp tiền tài khoản", "Du lịch & Khách sạn", "Tiền điện tử", "Bất động sản", "Thẻ game", "Streaming", "Mã quà tặng Shopee", "Khác"].map(l2 => ({ l1: "Voucher & Dịch vụ", l2: l2, fee: 9.0 })),
+        { l1: "Thể Thao & Dã Ngoại", l2: "Phụ Kiện Thể Thao & Dã Ngoại", fee: 10.0 }, { l1: "Thể Thao & Dã Ngoại", l2: "Thời Trang Thể Thao & Dã Ngoại", fee: 10.0 }, { l1: "Thể Thao & Dã Ngoại", l2: "Giày Thể Thao", fee: 10.0 },
+        { l1: "Đồng Hồ", l2: "Phụ kiện đồng hồ", fee: 10.0 },
+        // Add all Thoi trang tre em categories with 10.0%
+        ...["Phụ kiện trẻ em & trẻ sơ sinh", "Quần áo trẻ em", "Bao tay trẻ em & Tất", "Quần áo bé trai", "Giày bé trai", "Quần áo bé gái", "Giày bé gái"].map(l2 => ({ l1: "Thời trang trẻ em & trẻ sơ sinh", l2: l2, fee: 10.0 })),
+        // Add all Phu kien thoi trang categories with 10.0%
+        ...["Bộ phụ kiện", "Phụ kiện thêm", "Lắc chân", "Thắt lưng", "Vòng tay & Lắc tay", "Bông tai", "Kính mắt", "Găng tay", "Phụ kiện tóc", "Mũ", "Kim loại quý", "Dây chuyền", "Cà vạt & Nơ cổ", "Nhẫn", "Khăn choàng"].map(l2 => ({ l1: "Phụ Kiện Thời Trang", l2: l2, fee: 10.0 })),
+        // Add all Tui Vi Nam categories with 10.0%
+        ...["Ba lô", "Cặp xách công sở", "Ví cầm tay", "Túi đeo chéo", "Cặp laptop", "Túi tote", "Túi đeo hông & Túi đeo ngực", "Bóp/ Ví"].map(l2 => ({ l1: "Túi Ví Nam", l2: l2, fee: 10.0 })),
+        // Add all Thoi Trang Nam categories with 10.0%
+        ...["Đồ hóa trang", "Hoodie & Áo nỉ", "Đồ lót", "Áo khoác", "Quần jean", "Trang phục ngành nghề", "Quần dài", "Bộ", "Quần đùi", "Đồ ngủ", "Vớ/ Tất", "Com lê", "Áo len", "Áo", "Trang phục truyền thống"].map(l2 => ({ l1: "Thời Trang Nam", l2: l2, fee: 10.0 })),
+        // Add all Giay Dep Nam categories with 10.0%
+        ...["Bốt", "Giày tây lười", "Giày Oxfords & Giày buộc dây", "Xăng-đan & Dép", "Phụ kiện giày dép", "Giày sục", "Giày thể thao/ Sneakers"].map(l2 => ({ l1: "Giày Dép Nam", l2: l2, fee: 10.0 })),
+        { l1: "Du lịch & Hành lý", l2: "Phụ kiện du lịch", fee: 10.0 }, { l1: "Du lịch & Hành lý", l2: "Túi du lịch", fee: 10.0 },
+        // Add all Tui Vi Nu categories with 10.0%
+        ...["Ba lô", "Phụ kiện túi", "Ví dự tiệc & Ví cầm tay", "Túi đeo chéo", "Cặp laptop", "Túi quai xách", "Túi tote", "Túi đeo hông & Túi đeo ngực", "Bóp/ Ví"].map(l2 => ({ l1: "Túi Ví Nữ", l2: l2, fee: 10.0 })),
+        // Add all Thoi Trang Nu categories with 10.0%
+        ...["Đồ hóa trang", "Đầm", "Vải", "Hoodie & Áo nỉ", "Áo khoác", "Quần jean", "Đồ liền thân", "Đồ lót", "Đồ Bầu", "Quần", "Bộ", "Quần đùi", "Váy", "Đồ ngủ", "Vớ/ Tất", "Áo len", "Áo", "Trang phục truyền thống", "Váy cưới"].map(l2 => ({ l1: "Thời Trang Nữ", l2: l2, fee: 10.0 })),
+        // Add all Giay Dep Nu categories with 10.0%
+        ...["Bốt", "Xăng-đan và dép", "Giày đế bằng", "Giày cao gót", "Phụ kiện giày dép", "Giày thể thao/ Sneakers", "Giày đế xuồng"].map(l2 => ({ l1: "Giày Dép Nữ", l2: l2, fee: 10.0 })),
+        // Add all Sac Dep categories with 10.0%
+        ...["Tắm & chăm sóc cơ thể", "Bộ sản phẩm làm đẹp", "Dụng cụ làm đẹp", "Chăm sóc tóc", "Chăm sóc tay, chân & móng", "Trang điểm", "Chăm sóc nam giới", "Nước hoa", "Chăm sóc da mặt"].map(l2 => ({ l1: "Sắc Đẹp", l2: l2, fee: 10.0 })),
+        { l1: "Sức Khỏe", l2: "Hỗ trợ tình dục", fee: 10.0 },
+        // Add all Thuc pham categories with 10.0%
+        ...["Đồ uống có cồn", "Các loại bánh", "Đồ làm bánh", "Đồ uống", "Ngũ cốc & mứt", "Đồ chế biến sẵn", "Nguyên liệu nấu ăn", "Sữa - trứng", "Nhu yếu phẩm", "Thực phẩm tươi sống & đông lạnh", "Bộ quà tặng", "Đồ ăn vặt"].map(l2 => ({ l1: "Thực phẩm và đồ uống", l2: l2, fee: 10.0 })),
+        // Add all Me & Be categories with 10.0%
+        ...["Chăm sóc sức khỏe bé", "An toàn cho bé", "Tắm & chăm sóc cơ thể", "Tã & bô em bé", "Bộ & Gói quà tặng", "Sữa công thức & Thực phẩm cho bé"].map(l2 => ({ l1: "Mẹ & Bé", l2: l2, fee: 10.0 })), // Note: Some Me&Be are 9.5%, this adds the 10% ones
+        // Add all Cham Soc Thu Cung categories with 10.0%
+        ...["Vệ sinh cho thú cưng", "Phụ kiện cho thú cưng", "Quần áo & phụ kiện", "Thức ăn cho thú cưng", "Làm đẹp cho thú cưng", "Chăm sóc sức khỏe"].map(l2 => ({ l1: "Chăm Sóc Thú Cưng", l2: l2, fee: 10.0 })),
+        // Add all O to categories with 10.0%
+        ...["Phụ kiện ngoại thất ô tô", "Phụ kiện nội thất ô tô", "Phụ tùng ô tô", "Chăm sóc ô tô", "Móc chìa khóa và Bọc chìa ô tô", "Dầu nhớt và phụ gia ô tô", "Dụng cụ sửa chữa ô tô"].map(l2 => ({ l1: "Ô tô", l2: l2, fee: 10.0 })), // Note: O to base is 4%, this adds the 10% ones
+        { l1: "Sách & Tạp Chí", l2: "Sách", fee: 10.0 }, { l1: "Sách & Tạp Chí", l2: "Tạp Chí & Báo Giấy", fee: 10.0 },
+        // Add all So thich & Suu tam categories with 10.0%
+        ...["Băng - Đĩa", "Đồ Sưu Tầm", "Nhạc Cụ & Phụ Kiện", "Dụng Cụ May Vá", "Album Ảnh", "Quà Lưu Niệm", "Đồ chơi - Giải trí", "Đĩa Than"].map(l2 => ({ l1: "Sở thích & Sưu tầm", l2: l2, fee: 10.0 })),
+        // Add all Nha cua & Doi song categories with 10.0%
+        ...["Đồ dùng phòng tắm", "Chăn ga gối nệm", "Trang trí nhà cửa", "Bộ đồ bàn ăn", "Đồ thờ cúng, đồ phong thủy", "Nội thất", "Làm vườn", "Túi làm ấm", "Dụng cụ chăm sóc nhà cửa", "Chất khử mùi, làm thơm nhà", "Sắp xếp nhà cửa", "Dụng cụ nhà bếp", "Đèn", "Trang trí tiệc tùng", "Bảo hộ gia đình"].map(l2 => ({ l1: "Nhà cửa & Đời sống", l2: l2, fee: 10.0 })), // Note: Some are 9.5%, this adds the 10% ones
+        // Add all Mo to, xe may categories with 10.0%
+        ...["Phụ kiện xe máy", "Mũ bảo hiểm & Phụ kiện", "Phụ tùng xe máy"].map(l2 => ({ l1: "Mô tô, xe máy", l2: l2, fee: 10.0 })), // Note: Base is 4%, this adds the 10% ones
+        // Add all Van Phong Pham categories with 10.0%
+        ...["Họa cụ", "Quà Tặng - Giấy Gói", "Thư Tín", "Sổ & Giấy Các Loại", "Thiết Bị Trường Học", "Bút Các Loại"].map(l2 => ({ l1: "Văn Phòng Phẩm", l2: l2, fee: 10.0 }))
+    ];
+
+
+    // --- Input Elements (Get references AFTER the elements exist) ---
     const giaNhapInput = document.getElementById('giaNhap');
     const giaBanInput = document.getElementById('giaBan');
-    // Platform Fees
-    const tyLePhiCoDinhInput = document.getElementById('tyLePhiCoDinh');
+    const nganhHangL1Select = document.getElementById('nganhHangL1');
+    const nganhHangL2Select = document.getElementById('nganhHangL2');
+    const phiCoDinhDisplay = document.getElementById('phiCoDinhDisplay');
     const tyLePhiThanhToanInput = document.getElementById('tyLePhiThanhToan');
     const tyLeThueInput = document.getElementById('tyLeThue');
     const isMallCheckbox = document.getElementById('isMall');
     const tyLePhiMallInput = document.getElementById('tyLePhiMall');
-    // Marketing Costs %
     const phanTramQuangCaoInput = document.getElementById('phanTramQuangCao');
     const phanTramAffiliateInput = document.getElementById('phanTramAffiliate');
     const phanTramVoucherInput = document.getElementById('phanTramVoucher');
     const phanTramMktKhacInput = document.getElementById('phanTramMktKhac');
-    // Ops & Risk Costs %
     const tyLeVanHanhInput = document.getElementById('tyLeVanHanh');
     const tyLeBatThuongInput = document.getElementById('tyLeBatThuong');
-    // Shopee Programs
     const useFreeshipXtraCheckbox = document.getElementById('useFreeshipXtra');
     const useVoucherXtraCheckbox = document.getElementById('useVoucherXtra');
-    // Other Costs (Fixed)
     const chiPhiDongGoiInput = document.getElementById('chiPhiDongGoi');
     const chiPhiMktCoDinhInput = document.getElementById('chiPhiMktCoDinh');
-    // Return Costs
     const tyLeHoanInput = document.getElementById('tyLeHoan');
     const chiPhiXuLyHoanInput = document.getElementById('chiPhiXuLyHoan');
-    // Button & Result
     const tinhToanBtn = document.getElementById('tinhToanBtn');
     const ketQuaTrucTiepDiv = document.getElementById('ketQuaTrucTiep');
 
     // --- Error Elements ---
     const errorGiaNhap = document.getElementById('errorGiaNhap');
     const errorGiaBan = document.getElementById('errorGiaBan');
-    const errorPhiCoDinh = document.getElementById('errorPhiCoDinh');
+    const errorNganhHangL1 = document.getElementById('errorNganhHangL1');
+    const errorNganhHangL2 = document.getElementById('errorNganhHangL2');
+    // const errorPhiCoDinh = document.getElementById('errorPhiCoDinh'); // Removed input
     const errorPhiThanhToan = document.getElementById('errorPhiThanhToan');
     const errorThue = document.getElementById('errorThue');
     const errorPhiMall = document.getElementById('errorPhiMall');
@@ -426,7 +427,6 @@
     const errorMktKhac = document.getElementById('errorMktKhac');
     const errorVanHanh = document.getElementById('errorVanHanh');
     const errorBatThuong = document.getElementById('errorBatThuong');
-    // No direct error display for checkboxes needed usually
     const errorDongGoi = document.getElementById('errorDongGoi');
     const errorMktCoDinh = document.getElementById('errorMktCoDinh');
     const errorTyLeHoan = document.getElementById('errorTyLeHoan');
@@ -434,17 +434,26 @@
 
     // --- Constants ---
     const TYLE_VAT_QUANG_CAO = 0.10;
-    const TYLE_FREESHIP_XTRA = 0.08; // 8%
-    const MAX_PHI_FREESHIP_XTRA = 30000; // 30k VND
-    const TYLE_VOUCHER_XTRA = 0.05; // 5%
-    const MAX_PHI_VOUCHER_XTRA = 20000; // 20k VND
+    const TYLE_FREESHIP_XTRA = 0.08;
+    const MAX_PHI_FREESHIP_XTRA = 30000;
+    const TYLE_VOUCHER_XTRA = 0.05;
+    const MAX_PHI_VOUCHER_XTRA = 20000;
 
     // --- Helper Functions ---
-    function formatCurrency(value) { /* ... (same as before) ... */ }
-    function clearErrors() { /* ... (same as before, but include new error ids) ... */ }
-    function validateInput(inputElement, errorElement, message, allowZero = false, isPositive = false) { /* ... (same as before) ... */ }
-    // Need to update these two functions
-    function formatCurrency(value) {
+    function formatCurrency(value) { /* ... */ }
+    function clearErrors() { /* ... */ }
+    function validateInput(inputElement, errorElement, message, allowZero = false, isPositive = false) { /* ... */ }
+    function validateSelect(selectElement, errorElement, message) {
+        let isValid = true;
+        if (selectElement.value === "") {
+            errorElement.textContent = message;
+            isValid = false;
+        }
+        return isValid;
+    }
+
+    // Update these helpers
+     function formatCurrency(value) {
         const numValue = Number(value);
         if (isNaN(numValue)) { return 'Lỗi'; }
         return Math.round(numValue).toLocaleString('vi-VN');
@@ -455,51 +464,97 @@
         errorElements.forEach(el => el.textContent = '');
     }
 
-    function validateInput(inputElement, errorElement, message, allowZero = false, isPositive = false) {
-        // Skip validation if the element is disabled (like % Phi Mall when checkbox is off)
-        if (inputElement.disabled) {
-            errorElement.textContent = ''; // Clear any previous error
-            return true;
-        }
-
+     function validateInput(inputElement, errorElement, message, allowZero = false, isPositive = false) {
+        if (inputElement.disabled) { errorElement.textContent = ''; return true; }
         const valueStr = inputElement.value.trim();
         const valueNum = parseFloat(valueStr);
         let isValid = true;
-
-        if (valueStr === '') {
-            errorElement.textContent = 'Vui lòng nhập giá trị.';
-            isValid = false;
-        } else if (isNaN(valueNum)) {
-            errorElement.textContent = 'Vui lòng nhập số hợp lệ.';
-            isValid = false;
-        } else if (valueNum < 0) {
-            errorElement.textContent = message + ' không được âm.';
-            isValid = false;
-        } else if (isPositive && valueNum <= 0) {
-             errorElement.textContent = message + ' phải là số dương.';
-             isValid = false;
-        }
-
-        // Handle cases where default 0 is used but original input might be invalid text
-        if (valueNum === 0 && valueStr !== '0' && valueStr !== '' && isNaN(parseFloat(valueStr))) {
-             errorElement.textContent = 'Vui lòng nhập số hợp lệ.';
-             isValid = false; // Treat non-numeric input as invalid even if defaulted to 0
-        }
-
+        if (valueStr === '') { errorElement.textContent = 'Vui lòng nhập giá trị.'; isValid = false;
+        } else if (isNaN(valueNum)) { errorElement.textContent = 'Vui lòng nhập số hợp lệ.'; isValid = false;
+        } else if (valueNum < 0) { errorElement.textContent = message + ' không được âm.'; isValid = false;
+        } else if (isPositive && valueNum <= 0) { errorElement.textContent = message + ' phải là số dương.'; isValid = false; }
+        if (valueNum === 0 && valueStr !== '0' && valueStr !== '' && isNaN(parseFloat(valueStr))) { errorElement.textContent = 'Vui lòng nhập số hợp lệ.'; isValid = false; }
         return isValid;
     }
 
 
-    // --- Event Listener for Mall Checkbox ---
+    // --- Populate Dropdowns ---
+    function populateL1Dropdown() {
+        const l1Categories = [...new Set(categoryData.map(item => item.l1))].sort();
+        l1Categories.forEach(l1 => {
+            const option = document.createElement('option');
+            option.value = l1;
+            option.textContent = l1;
+            nganhHangL1Select.appendChild(option);
+        });
+    }
+
+    function updateL2Dropdown() {
+        const selectedL1 = nganhHangL1Select.value;
+        nganhHangL2Select.innerHTML = '<option value="">-- Chọn Cấp 2 --</option>'; // Reset L2
+        phiCoDinhDisplay.textContent = "Chưa chọn ngành hàng"; // Reset display
+        nganhHangL2Select.disabled = true;
+         errorNganhHangL1.textContent = ''; // Clear L1 error on change
+         errorNganhHangL2.textContent = ''; // Clear L2 error on change
+
+
+        if (selectedL1) {
+            const l2Categories = categoryData
+                .filter(item => item.l1 === selectedL1)
+                .map(item => item.l2)
+                .sort();
+
+            if (l2Categories.length > 0) {
+                 l2Categories.forEach(l2 => {
+                    const option = document.createElement('option');
+                    option.value = l2;
+                    option.textContent = l2;
+                    nganhHangL2Select.appendChild(option);
+                });
+                nganhHangL2Select.disabled = false;
+            } else {
+                 // Handle cases where L1 might not have specific L2 in data (though unlikely with full list)
+                 phiCoDinhDisplay.textContent = "Không có Cấp 2 cho ngành này";
+            }
+        }
+        // Trigger calculation after updating L2 options (optional, might be better on L2 change)
+        // tinhLoiNhuan();
+    }
+
+     function updateFeeDisplay() {
+        const selectedL1 = nganhHangL1Select.value;
+        const selectedL2 = nganhHangL2Select.value;
+         errorNganhHangL2.textContent = ''; // Clear L2 error on change
+
+        if (selectedL1 && selectedL2) {
+            const category = categoryData.find(item => item.l1 === selectedL1 && item.l2 === selectedL2);
+            if (category) {
+                phiCoDinhDisplay.textContent = `${category.fee.toFixed(1)}%`; // Display fee
+                 // Trigger calculation whenever L2 changes and fee is found
+                 tinhLoiNhuan();
+            } else {
+                phiCoDinhDisplay.textContent = "Lỗi tìm phí"; // Should not happen if data is correct
+            }
+        } else {
+             phiCoDinhDisplay.textContent = "Chưa chọn ngành hàng";
+        }
+    }
+
+
+    // --- Event Listeners ---
+    document.addEventListener('DOMContentLoaded', populateL1Dropdown); // Populate L1 on load
+    nganhHangL1Select.addEventListener('change', updateL2Dropdown);
+    nganhHangL2Select.addEventListener('change', updateFeeDisplay);
+
     isMallCheckbox.addEventListener('change', function() {
         tyLePhiMallInput.disabled = !this.checked;
-        if (!this.checked) {
-            // tyLePhiMallInput.value = ''; // Keep default value, just disable
-            errorPhiMall.textContent = '';
-        }
-        // Optional: Trigger recalculation immediately
-        // tinhLoiNhuan();
+        if (!this.checked) { errorPhiMall.textContent = ''; }
+         tinhLoiNhuan(); // Recalculate when Mall status changes
     });
+     // Add listeners for Shopee program checkboxes to recalculate
+    useFreeshipXtraCheckbox.addEventListener('change', tinhLoiNhuan);
+    useVoucherXtraCheckbox.addEventListener('change', tinhLoiNhuan);
+
 
     // --- Main Calculation Function ---
     function tinhLoiNhuan() {
@@ -508,23 +563,23 @@
         ketQuaTrucTiepDiv.innerHTML = '';
         ketQuaTrucTiepDiv.className = '';
 
-        // 2. Validate ALL Inputs
+        // 2. Validate ALL Inputs (including selects)
         let formIsValid = true;
         formIsValid &= validateInput(giaNhapInput, errorGiaNhap, "Giá nhập", true);
-        formIsValid &= validateInput(giaBanInput, errorGiaBan, "Giá bán", false, true); // Must be positive
-        formIsValid &= validateInput(tyLePhiCoDinhInput, errorPhiCoDinh, "% Phí cố định", true);
+        formIsValid &= validateInput(giaBanInput, errorGiaBan, "Giá bán", false, true);
+        // Validate Category Selection
+        formIsValid &= validateSelect(nganhHangL1Select, errorNganhHangL1, "Vui lòng chọn ngành hàng Cấp 1.");
+        formIsValid &= validateSelect(nganhHangL2Select, errorNganhHangL2, "Vui lòng chọn ngành hàng Cấp 2.");
+        // Other validations...
         formIsValid &= validateInput(tyLePhiThanhToanInput, errorPhiThanhToan, "% Phí thanh toán", true);
         formIsValid &= validateInput(tyLeThueInput, errorThue, "% Thuế", true);
-        // Only validate Mall fee if checkbox is checked
-        if (isMallCheckbox.checked) {
-            formIsValid &= validateInput(tyLePhiMallInput, errorPhiMall, "% Phí Mall", true);
-        }
+        if (isMallCheckbox.checked) { formIsValid &= validateInput(tyLePhiMallInput, errorPhiMall, "% Phí Mall", true); }
         formIsValid &= validateInput(phanTramQuangCaoInput, errorQuangCao, "% Quảng cáo Shopee", true);
         formIsValid &= validateInput(phanTramAffiliateInput, errorAffiliate, "% Affiliate", true);
         formIsValid &= validateInput(phanTramVoucherInput, errorVoucher, "% Voucher/KM", true);
         formIsValid &= validateInput(phanTramMktKhacInput, errorMktKhac, "% MKT khác", true);
-        formIsValid &= validateInput(tyLeVanHanhInput, errorVanHanh, "% Vận Hành", true); // New field
-        formIsValid &= validateInput(tyLeBatThuongInput, errorBatThuong, "% Bất Thường", true); // New field
+        formIsValid &= validateInput(tyLeVanHanhInput, errorVanHanh, "% Vận Hành", true);
+        formIsValid &= validateInput(tyLeBatThuongInput, errorBatThuong, "% Bất Thường", true);
         formIsValid &= validateInput(chiPhiDongGoiInput, errorDongGoi, "Chi phí đóng gói", true);
         formIsValid &= validateInput(chiPhiMktCoDinhInput, errorMktCoDinh, "Chi phí MKT cố định", true);
         formIsValid &= validateInput(tyLeHoanInput, errorTyLeHoan, "% Tỷ lệ hoàn", true);
@@ -539,7 +594,12 @@
         // 3. Get Validated Values
         const giaNhap = parseFloat(giaNhapInput.value) || 0;
         const giaBan = parseFloat(giaBanInput.value) || 0;
-        const tyLePhiCoDinh = (parseFloat(tyLePhiCoDinhInput.value) || 0) / 100;
+        // --- Get Fixed Fee from selected category ---
+        const selectedL1 = nganhHangL1Select.value;
+        const selectedL2 = nganhHangL2Select.value;
+        const categoryInfo = categoryData.find(item => item.l1 === selectedL1 && item.l2 === selectedL2);
+        const tyLePhiCoDinh = categoryInfo ? (categoryInfo.fee / 100) : 0; // Get fee based on selection
+        // --- End Get Fixed Fee ---
         const tyLePhiThanhToan = (parseFloat(tyLePhiThanhToanInput.value) || 0) / 100;
         const tyLeThue = (parseFloat(tyLeThueInput.value) || 0) / 100;
         const tyLePhiMall = (isMallCheckbox.checked ? (parseFloat(tyLePhiMallInput.value) || 0) : 0) / 100;
@@ -547,19 +607,18 @@
         const phanTramAffiliate = (parseFloat(phanTramAffiliateInput.value) || 0) / 100;
         const phanTramVoucher = (parseFloat(phanTramVoucherInput.value) || 0) / 100;
         const phanTramMktKhac = (parseFloat(phanTramMktKhacInput.value) || 0) / 100;
-        const tyLeVanHanh = (parseFloat(tyLeVanHanhInput.value) || 0) / 100; // New field
-        const tyLeBatThuong = (parseFloat(tyLeBatThuongInput.value) || 0) / 100; // New field
-        const useFSX = useFreeshipXtraCheckbox.checked; // New checkbox
-        const useVX = useVoucherXtraCheckbox.checked; // New checkbox
+        const tyLeVanHanh = (parseFloat(tyLeVanHanhInput.value) || 0) / 100;
+        const tyLeBatThuong = (parseFloat(tyLeBatThuongInput.value) || 0) / 100;
+        const useFSX = useFreeshipXtraCheckbox.checked;
+        const useVX = useVoucherXtraCheckbox.checked;
         const chiPhiDongGoi = parseFloat(chiPhiDongGoiInput.value) || 0;
         const chiPhiMktCoDinh = parseFloat(chiPhiMktCoDinhInput.value) || 0;
         const tyLeHoan = (parseFloat(tyLeHoanInput.value) || 0) / 100;
         const chiPhiXuLyHoan = parseFloat(chiPhiXuLyHoanInput.value) || 0;
 
-
         // --- Calculations ---
         // 4. Percentage-Based Costs (on giaBan)
-        const cpPhiCoDinh = giaBan * tyLePhiCoDinh;
+        const cpPhiCoDinh = giaBan * tyLePhiCoDinh; // Use category-based fee
         const cpPhiThanhToan = giaBan * tyLePhiThanhToan;
         const cpThue = giaBan * tyLeThue;
         const cpPhiMall = giaBan * tyLePhiMall;
@@ -568,18 +627,12 @@
         const cpAffiliate = giaBan * phanTramAffiliate;
         const cpVoucher = giaBan * phanTramVoucher;
         const cpMktKhacPercent = giaBan * phanTramMktKhac;
-        const cpVanHanh = giaBan * tyLeVanHanh; // New Cost
-        const cpBatThuong = giaBan * tyLeBatThuong; // New Cost
+        const cpVanHanh = giaBan * tyLeVanHanh;
+        const cpBatThuong = giaBan * tyLeBatThuong;
 
         // 5. Shopee Program Costs (with Caps)
-        let cpFSX = 0;
-        if (useFSX) {
-            cpFSX = Math.min(giaBan * TYLE_FREESHIP_XTRA, MAX_PHI_FREESHIP_XTRA);
-        }
-        let cpVX = 0;
-        if (useVX) {
-            cpVX = Math.min(giaBan * TYLE_VOUCHER_XTRA, MAX_PHI_VOUCHER_XTRA);
-        }
+        let cpFSX = 0; if (useFSX) { cpFSX = Math.min(giaBan * TYLE_FREESHIP_XTRA, MAX_PHI_FREESHIP_XTRA); }
+        let cpVX = 0; if (useVX) { cpVX = Math.min(giaBan * TYLE_VOUCHER_XTRA, MAX_PHI_VOUCHER_XTRA); }
 
         // 6. Fixed Costs per Order
         const cpDongGoi = chiPhiDongGoi;
@@ -589,42 +642,18 @@
         const cpHoanTrungBinh = tyLeHoan * chiPhiXuLyHoan;
 
         // 8. Total Costs (excluding cost price)
-        const tongChiPhiTruGiaNhap =
-            cpPhiCoDinh + cpPhiThanhToan + cpThue + cpPhiMall + // Platform %
-            cpQuangCao + cpVatQuangCao + cpAffiliate + cpVoucher + cpMktKhacPercent + // Marketing %
-            cpVanHanh + cpBatThuong + // Ops & Risk %
-            cpFSX + cpVX +           // Shopee Programs
-            cpDongGoi + cpMktCoDinh + // Fixed / Order
-            cpHoanTrungBinh;         // Average Return Cost
-
+        const tongChiPhiTruGiaNhap = cpPhiCoDinh + cpPhiThanhToan + cpThue + cpPhiMall + cpQuangCao + cpVatQuangCao + cpAffiliate + cpVoucher + cpMktKhacPercent + cpVanHanh + cpBatThuong + cpFSX + cpVX + cpDongGoi + cpMktCoDinh + cpHoanTrungBinh;
         const tongChiPhiBaoGomGiaGoc = tongChiPhiTruGiaNhap + giaNhap;
 
         // 9. Calculate Profit
         const loiNhuan = giaBan - tongChiPhiBaoGomGiaGoc;
 
         // 10. Prepare and Display Result
-        let resultHTML = '';
-        let resultClass = '';
-        let colorClass = '';
-
-        if (loiNhuan > 0) { /* ... (same as before) ... */ } else if (loiNhuan < 0) { /* ... (same as before) ... */ } else { /* ... (same as before) ... */ }
-        // Logic for setting resultHTML, resultClass, colorClass remains the same
-        if (loiNhuan > 0) {
-            resultClass = 'result-positive';
-            colorClass = 'positive';
-            resultHTML = `Lợi nhuận ước tính: <span class="${colorClass}">${formatCurrency(loiNhuan)}</span> VNĐ`;
-        } else if (loiNhuan < 0) {
-            resultClass = 'result-negative';
-            colorClass = 'negative';
-            resultHTML = `Lỗ ước tính: <span class="${colorClass}">${formatCurrency(loiNhuan)}</span> VNĐ`;
-        } else {
-            resultClass = 'result-zero';
-            colorClass = 'zero';
-            resultHTML = `Hòa vốn ước tính: <span class="${colorClass}">${formatCurrency(loiNhuan)}</span> VNĐ`;
-        }
-
-
-        resultHTML += `<br><small style="color: var(--text-color-light); font-size: 0.9em;">(Tổng chi phí/đơn: ${formatCurrency(tongChiPhiBaoGomGiaGoc)} VNĐ)</small>`;
+        let resultHTML = ''; let resultClass = ''; let colorClass = '';
+        if (loiNhuan > 0) { resultClass = 'result-positive'; colorClass = 'positive'; resultHTML = `Lợi nhuận ước tính: <span class="${colorClass}">${formatCurrency(loiNhuan)}</span> VNĐ`;
+        } else if (loiNhuan < 0) { resultClass = 'result-negative'; colorClass = 'negative'; resultHTML = `Lỗ ước tính: <span class="${colorClass}">${formatCurrency(loiNhuan)}</span> VNĐ`;
+        } else { resultClass = 'result-zero'; colorClass = 'zero'; resultHTML = `Hòa vốn ước tính: <span class="${colorClass}">${formatCurrency(loiNhuan)}</span> VNĐ`; }
+        resultHTML += `<br><small style="color: var(--text-color-light); font-size: 0.9em;">(Tổng chi phí/đơn: ${formatCurrency(tongChiPhiBaoGomGiaGoc)} VNĐ | Phí cố định: ${ (tyLePhiCoDinh * 100).toFixed(1) }%)</small>`; // Show applied fixed fee %
 
         ketQuaTrucTiepDiv.classList.add(resultClass);
         ketQuaTrucTiepDiv.innerHTML = resultHTML;
@@ -632,24 +661,13 @@
 
     // --- Attach Event Listeners ---
     tinhToanBtn.addEventListener('click', tinhLoiNhuan);
-    const allInputs = document.querySelectorAll('input[type="number"], input[type="checkbox"]'); // Include checkbox
-    allInputs.forEach(input => {
-         if(input.type === 'number') {
-            input.addEventListener('keypress', function(event) {
-                if (event.key === 'Enter') {
-                    event.preventDefault();
-                    tinhToanBtn.click();
-                }
-            });
-        }
-        // Optional: Recalculate on change for immediate feedback
-        // input.addEventListener('input', tinhLoiNhuan); // For number inputs
-        // input.addEventListener('change', tinhLoiNhuan); // For checkboxes
+    const allInputsAndSelects = document.querySelectorAll('input[type="number"], input[type="checkbox"], select'); // Include selects
+    allInputsAndSelects.forEach(input => {
+         if(input.type === 'number') { input.addEventListener('keypress', function(event) { if (event.key === 'Enter') { event.preventDefault(); tinhToanBtn.click(); } }); }
+         // Optional: Recalculate on change for immediate feedback (can be slow)
+         // input.addEventListener('input', tinhLoiNhuan); // Number inputs
+         // input.addEventListener('change', tinhLoiNhuan); // Checkboxes and Selects
     });
-
-    // Initial calculation on load? Optional.
-    // document.addEventListener('DOMContentLoaded', tinhLoiNhuan);
-
 
 </script>
 
