@@ -3,137 +3,265 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Công Cụ Tính Lợi Nhuận Shopee Tối Giản V6 - Vũ Quang Ecommerce</title>
+    <title>Công Cụ Tính Lợi Nhuận Shopee Hiện Đại - Vũ Quang Ecommerce</title>
     <style>
-        /* --- CSS Styles (Giữ nguyên phần lớn) --- */
-         :root {
+        /* --- MODERN UI STYLES --- */
+        :root {
             --primary-color: #ee4d2d;
             --primary-color-dark: #d73210;
             --success-color: #28a745;
             --error-color: #dc3545;
-            --warning-color: #ffc107;
-            --text-color: #333;
-            --text-color-light: #555;
+            --warning-color: #ffc107; /* Gold/Yellow for warning/zero */
+            --text-color: #343a40; /* Darker grey */
+            --text-color-light: #6c757d; /* Lighter grey */
             --text-color-footer: #6c757d;
-            --note-color: #777;
-            --border-color: #ddd;
+            --note-color: #6c757d;
+            --border-color: #dee2e6; /* Lighter border */
+            --input-bg: #fff;
             --background-color: #f8f9fa;
             --white: #fff;
-            --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-            --border-radius: 8px;
-            --transition-speed: 0.3s;
-            --tooltip-bg: #333;
+            --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06); /* Softer shadow */
+            --box-shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.08);
+            --border-radius: 0.375rem; /* ~6px */
+            --border-radius-lg: 0.5rem; /* ~8px */
+            --transition-speed: 0.25s;
+            --tooltip-bg: #343a40;
             --tooltip-text: #fff;
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
-        body { /* ... (Giữ nguyên) ... */ }
-        .container { /* ... (Giữ nguyên) ... */ }
-        h1 { /* ... (Giữ nguyên) ... */ }
-        .luu-y { /* ... (Giữ nguyên) ... */ }
-        fieldset { /* ... (Giữ nguyên) ... */ }
-        legend { /* ... (Giữ nguyên) ... */ }
 
-        .form-group { margin-bottom: 18px; }
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: var(--white);
+            padding: 35px 40px; /* More padding */
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--box-shadow-lg);
+            max-width: 700px; /* Wider layout */
+            width: 100%;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            flex-shrink: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 2em; /* Larger title */
+            font-weight: 700;
+        }
+        .luu-y {
+            text-align: center;
+            font-size: 0.95em;
+            color: var(--text-color-light);
+            margin-bottom: 30px; /* More space below note */
+            background-color: #fff3cd; /* Lighter warning yellow */
+            padding: 10px 15px;
+            border-radius: var(--border-radius);
+            border: 1px solid #ffeeba;
+        }
+
+        fieldset {
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            padding: 20px 25px 25px 25px;
+            margin-bottom: 30px;
+            background-color: var(--white);
+            box-shadow: var(--box-shadow); /* Add shadow to fieldsets too */
+            transition: box-shadow var(--transition-speed) ease;
+        }
+        fieldset:focus-within { /* Highlight fieldset when interacting */
+             border-color: var(--primary-color);
+             box-shadow: 0 0 0 3px rgba(238, 77, 45, 0.1);
+        }
+        legend {
+            padding: 0 15px;
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 1.2em;
+            margin-bottom: 15px; /* Space below legend */
+        }
+
+        .form-group { margin-bottom: 20px; position: relative; } /* Relative for potential icon placement */
         .form-group:last-child { margin-bottom: 0; }
 
-        /* Updated Label Styling to include icon */
         label {
-            display: inline-block; /* Allow icon to sit beside */
-            margin-bottom: 5px;
-            font-weight: 600;
-            color: var(--text-color-light);
-            font-size: 0.95em;
+            display: inline-flex; /* Align icon with text */
+            align-items: center;
+            margin-bottom: 8px; /* More space below label */
+            font-weight: 500; /* Slightly less bold */
+            color: var(--text-color); /* Darker labels */
+            font-size: 1em;
         }
         /* Icon Styling */
         .info-icon {
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            line-height: 16px; /* Center the text vertically */
-            text-align: center;
-            background-color: #ccc;
-            color: white;
+            display: inline-flex; /* Use flex for centering */
+            justify-content: center;
+            align-items: center;
+            width: 18px;
+            height: 18px;
+            background-color: #e9ecef; /* Lighter grey */
+            color: var(--text-color-light);
             border-radius: 50%;
-            font-size: 10px; /* Smaller font for 'i' */
+            font-size: 11px;
             font-weight: bold;
             font-style: normal;
             cursor: pointer;
-            margin-left: 5px;
-            user-select: none; /* Prevent selecting the 'i' */
-            vertical-align: middle; /* Align with label text */
-            transition: background-color 0.2s ease;
+            margin-left: 6px;
+            user-select: none;
+            transition: background-color 0.2s ease, color 0.2s ease;
         }
         .info-icon:hover {
-             background-color: var(--text-color-light);
+             background-color: var(--primary-color);
+             color: var(--white);
         }
 
-        /* Hide the original small tag */
-        .form-group small { display: none; }
+        input[type="number"], input[type="text"], select {
+            width: 100%;
+            padding: 12px 15px; /* More padding */
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            font-size: 1em;
+            color: var(--text-color);
+            background-color: var(--input-bg);
+            transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+        }
+        input[type="number"]:focus, input[type="text"]:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(238, 77, 45, 0.1); /* Enhanced focus */
+        }
+        input[type="number"]:disabled, select:disabled {
+             background-color: #e9ecef; /* Consistent disabled bg */
+             cursor: not-allowed;
+             opacity: 0.7;
+         }
+        #phiCoDinhDisplay {
+            font-weight: 700; /* Bolder */
+            color: var(--primary-color);
+            padding: 8px 0; /* More padding */
+            font-size: 1.05em;
+        }
 
-        input[type="number"], input[type="text"], select { /* ... (Giữ nguyên) ... */ }
-        input[type="number"]:focus, input[type="text"]:focus, select:focus { /* ... (Giữ nguyên) ... */ }
-        input[type="number"]:disabled, select:disabled { /* ... (Giữ nguyên) ... */ }
-        #phiCoDinhDisplay { /* ... (Giữ nguyên) ... */ }
+        input[type="checkbox"] { margin-right: 10px; width: 18px; height: 18px; accent-color: var(--primary-color); cursor: pointer;}
+        .checkbox-label { display: inline-flex; align-items: center; font-weight: 500; color: var(--text-color); cursor: pointer; user-select: none; margin-bottom: 0; }
+        .checkbox-label span { line-height: 1.2; }
+        .checkbox-group { display: flex; flex-direction: column; gap: 15px; padding-top: 10px; }
 
-        input[type="checkbox"] { /* ... (Giữ nguyên) ... */ }
-        .checkbox-label { /* ... (Giữ nguyên) ... */ }
-        .checkbox-label span { /* ... (Giữ nguyên) ... */ }
-        .checkbox-group { /* ... (Giữ nguyên) ... */ }
+        .input-row { display: flex; gap: 20px; align-items: flex-start; }
+        .input-row .form-group { flex: 1; margin-bottom: 0; }
 
-        .input-row { /* ... (Giữ nguyên) ... */ }
-        .input-row .form-group { /* ... (Giữ nguyên) ... */ }
+        button#tinhToanBtn {
+            display: block;
+            width: 100%;
+            padding: 15px; /* Larger button */
+            background-image: linear-gradient(to right, var(--primary-color), #f06d50); /* Gradient */
+            background-size: 200% auto;
+            color: var(--white);
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.15em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-position 0.4s ease, transform 0.1s ease, box-shadow 0.3s ease;
+            margin-top: 30px;
+            box-shadow: 0 4px 10px rgba(238, 77, 45, 0.3);
+        }
+        button#tinhToanBtn:hover {
+             background-position: right center; /* Change gradient direction */
+             box-shadow: 0 6px 15px rgba(238, 77, 45, 0.4);
+        }
+        button#tinhToanBtn:active {
+            transform: scale(0.98);
+            box-shadow: 0 2px 5px rgba(238, 77, 45, 0.3);
+        }
 
-        button { /* ... (Giữ nguyên) ... */ }
-        button:hover { /* ... (Giữ nguyên) ... */ }
-        button:active { /* ... (Giữ nguyên) ... */ }
+        #ketQuaTrucTiep {
+            margin-top: 30px;
+            padding: 25px 30px; /* More padding */
+            border-radius: var(--border-radius-lg);
+            background-color: var(--white);
+            border: 1px solid var(--border-color);
+            border-left-width: 5px; /* Colored border */
+            border-left-color: var(--border-color); /* Default */
+            text-align: center;
+            font-size: 1.1em;
+            line-height: 1.6;
+            box-shadow: var(--box-shadow);
+            opacity: 0; /* Hidden initially for animation */
+            transform: translateY(20px);
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out, border-left-color 0.4s ease;
+        }
+        #ketQuaTrucTiep.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        #ketQuaTrucTiep.result-positive { border-left-color: var(--success-color); background-color: #f0fff4; }
+        #ketQuaTrucTiep.result-negative { border-left-color: var(--error-color); background-color: #fff5f5; }
+        #ketQuaTrucTiep.result-zero { border-left-color: var(--warning-color); background-color: #fffcf0; }
 
-        #ketQuaTrucTiep { /* ... (Giữ nguyên) ... */ }
-        #ketQuaTrucTiep.result-positive { /* ... (Giữ nguyên) ... */ }
-        #ketQuaTrucTiep.result-negative { /* ... (Giữ nguyên) ... */ }
-        #ketQuaTrucTiep.result-zero { /* ... (Giữ nguyên) ... */ }
+        #ketQuaTrucTiep span { /* Style the result number */
+             font-size: 1.6em; /* Larger result number */
+             font-weight: 700;
+             display: block; /* Put number on new line */
+             margin-top: 5px;
+             margin-bottom: 8px;
+         }
+         #ketQuaTrucTiep .sub-info { /* Style for total cost/fee % */
+              color: var(--text-color-light);
+              font-size: 0.9em;
+              display: block; /* On new line */
+              margin-top: 10px;
+          }
 
-        .positive, .negative, .zero { /* ... (Giữ nguyên) ... */ }
-        .error { /* ... (Giữ nguyên) ... */ }
+        .positive { color: var(--success-color); }
+        .negative { color: var(--error-color); }
+        .zero { color: var(--warning-color); }
+
+        .error { color: var(--error-color); font-size: 0.85em; margin-top: 6px; min-height: 1.2em; }
+
         footer { /* ... (Giữ nguyên) ... */ }
 
         /* --- Tooltip Styling --- */
         #tooltip-box {
             position: absolute;
-            display: none; /* Initially hidden */
+            display: none;
             background-color: var(--tooltip-bg);
             color: var(--tooltip-text);
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 0.85em;
-            max-width: 250px;
+            padding: 10px 15px; /* More padding */
+            border-radius: var(--border-radius);
+            font-size: 0.9em; /* Slightly larger */
+            line-height: 1.5;
+            max-width: 280px;
             z-index: 100;
-            opacity: 0; /* For fade effect */
-            transition: opacity 0.2s ease;
-            pointer-events: none; /* Prevent tooltip from blocking clicks */
+            opacity: 0;
+            transition: opacity var(--transition-speed) ease;
+            pointer-events: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
-        #tooltip-box.visible {
-            display: block;
-            opacity: 1;
-        }
-         /* Optional: Tooltip arrow */
-        #tooltip-box::after {
-            content: '';
-            position: absolute;
-            border-width: 5px;
-            border-style: solid;
-            /* Arrow positioning will be set by JS */
-        }
-
+        #tooltip-box.visible { display: block; opacity: 1; }
 
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Công Cụ Tính Lợi Nhuận Shopee Tối Giản</h1>
-    <p class="luu-y">Nhập đầy đủ thông tin giá và các loại chi phí dự kiến để ước tính lợi nhuận.</p>
+    <h1>Công Cụ Tính Lợi Nhuận Shopee</h1>
+    <p class="luu-y">Nhập thông tin giá và các loại chi phí dự kiến để ước tính lợi nhuận.</p>
 
     <!-- === THÔNG TIN CƠ BẢN === -->
     <fieldset>
@@ -152,7 +280,7 @@
         </div>
     </fieldset>
 
-    <!-- === PHÍ SÀN (Tự động & Nhập liệu) === -->
+    <!-- === PHÍ SÀN === -->
     <fieldset>
          <legend>Phí Sàn</legend>
          <div class="input-row">
@@ -169,12 +297,11 @@
          </div>
           <div class="form-group">
               <label>Phí Cố Định (Hoa hồng) tự động:</label>
-              <div id="phiCoDinhDisplay" style="padding-top: 5px;">Chưa chọn ngành hàng</div>
+              <div id="phiCoDinhDisplay">Chưa chọn ngành hàng</div>
           </div>
          <hr style="border: none; border-top: 1px solid #eee; margin: 15px 0;">
          <div class="form-group">
              <label for="tyLeThue">% Thuế</label>
-             <!-- Add icon and tooltip data -->
              <i class="info-icon" data-tooltip="Thuế TNCN/TNDN bạn cần nộp theo quy định (nếu có).">ⓘ</i>
              <input type="number" id="tyLeThue" placeholder="VD: 1.5" step="0.1" value="1.5" required>
              <div class="error" id="errorThue"></div>
@@ -182,8 +309,7 @@
          <small style="font-size: 0.8em; color: var(--note-color); display: block; margin-top: -10px;">*Phí thanh toán (~4%) đã được tự động tính vào tổng chi phí.</small>
     </fieldset>
 
-
-    <!-- === CHI PHÍ MARKETING (% trên Giá Bán) === -->
+    <!-- === CHI PHÍ MARKETING === -->
     <fieldset>
          <legend>Chi Phí Marketing (% trên Giá Bán)</legend>
          <div class="input-row">
@@ -216,7 +342,7 @@
          </div>
     </fieldset>
 
-     <!-- === CHI PHÍ VẬN HÀNH & RỦI RO (% trên Giá Bán) === -->
+    <!-- === VẬN HÀNH & RỦI RO === -->
     <fieldset>
         <legend>Vận Hành & Rủi Ro (% trên Giá Bán)</legend>
         <div class="input-row">
@@ -235,7 +361,7 @@
         </div>
     </fieldset>
 
-    <!-- === CHƯƠNG TRÌNH SHOPEE (Checkbox) === -->
+    <!-- === CHƯƠNG TRÌNH SHOPEE === -->
     <fieldset>
         <legend>Chương Trình Shopee</legend>
         <div class="checkbox-group">
@@ -245,13 +371,11 @@
                     <span>Tham gia Voucher Xtra?</span>
                      <i class="info-icon" data-tooltip="Phí dịch vụ Voucher Xtra (~5%, tối đa 20.000đ/sản phẩm). Kiểm tra biểu phí mới nhất trên Kênh Người Bán.">ⓘ</i>
                 </label>
-                 <!-- <small> moved to tooltip </small> -->
             </div>
         </div>
     </fieldset>
 
-
-     <!-- === CHI PHÍ KHÁC (Cố định / đơn) === -->
+    <!-- === CHI PHÍ KHÁC (VNĐ / ĐƠN) === -->
     <fieldset>
         <legend>Chi Phí Khác (VNĐ / đơn)</legend>
          <div class="input-row">
@@ -270,7 +394,7 @@
          </div>
     </fieldset>
 
-      <!-- === CHI PHÍ HOÀN HÀNG === -->
+    <!-- === CHI PHÍ HOÀN HÀNG === -->
     <fieldset>
         <legend>Chi Phí Hoàn Hàng (Ước tính)</legend>
          <div class="input-row">
@@ -292,7 +416,7 @@
     <button id="tinhToanBtn">Tính Lợi Nhuận</button>
 
     <!-- === RESULT AREA === -->
-    <div id="ketQuaTrucTiep"></div>
+    <div id="ketQuaTrucTiep"></div> <!-- Initially hidden via opacity/transform in CSS -->
 
 </div>
 
@@ -303,46 +427,13 @@
 
 <script defer>
     // --- Category Data (Giữ nguyên) ---
-    const categoryData = [ /* ... Copy data from previous response ... */ ];
+    const categoryData = [ /* ... Copy data from V5 ... */ ];
 
-    // --- Input Elements (Giữ nguyên) ---
-    const giaNhapInput = document.getElementById('giaNhap');
-    const giaBanInput = document.getElementById('giaBan');
-    const nganhHangL1Select = document.getElementById('nganhHangL1');
-    const nganhHangL2Select = document.getElementById('nganhHangL2');
-    const phiCoDinhDisplay = document.getElementById('phiCoDinhDisplay');
-    const tyLeThueInput = document.getElementById('tyLeThue');
-    const phanTramQuangCaoInput = document.getElementById('phanTramQuangCao');
-    const phanTramAffiliateInput = document.getElementById('phanTramAffiliate');
-    const phanTramVoucherInput = document.getElementById('phanTramVoucher');
-    const phanTramMktKhacInput = document.getElementById('phanTramMktKhac');
-    const tyLeVanHanhInput = document.getElementById('tyLeVanHanh');
-    const tyLeBatThuongInput = document.getElementById('tyLeBatThuong');
-    const useVoucherXtraCheckbox = document.getElementById('useVoucherXtra');
-    const chiPhiDongGoiInput = document.getElementById('chiPhiDongGoi');
-    const chiPhiMktCoDinhInput = document.getElementById('chiPhiMktCoDinh');
-    const tyLeHoanInput = document.getElementById('tyLeHoan');
-    const chiPhiXuLyHoanInput = document.getElementById('chiPhiXuLyHoan');
-    const tinhToanBtn = document.getElementById('tinhToanBtn');
+    // --- Input & Element References (Giữ nguyên) ---
+    const giaNhapInput = document.getElementById('giaNhap'); /* ... rest of elements ... */
     const ketQuaTrucTiepDiv = document.getElementById('ketQuaTrucTiep');
-    const tooltipBox = document.getElementById('tooltip-box'); // Get tooltip element
-
-    // --- Error Elements (Giữ nguyên) ---
-    const errorGiaNhap = document.getElementById('errorGiaNhap');
-    const errorGiaBan = document.getElementById('errorGiaBan');
-    const errorNganhHangL1 = document.getElementById('errorNganhHangL1');
-    const errorNganhHangL2 = document.getElementById('errorNganhHangL2');
-    const errorThue = document.getElementById('errorThue');
-    const errorQuangCao = document.getElementById('errorQuangCao');
-    const errorAffiliate = document.getElementById('errorAffiliate');
-    const errorVoucher = document.getElementById('errorVoucher');
-    const errorMktKhac = document.getElementById('errorMktKhac');
-    const errorVanHanh = document.getElementById('errorVanHanh');
-    const errorBatThuong = document.getElementById('errorBatThuong');
-    const errorDongGoi = document.getElementById('errorDongGoi');
-    const errorMktCoDinh = document.getElementById('errorMktCoDinh');
-    const errorTyLeHoan = document.getElementById('errorTyLeHoan');
-    const errorXuLyHoan = document.getElementById('errorXuLyHoan');
+    const tooltipBox = document.getElementById('tooltip-box');
+    // ... Error elements ...
 
     // --- Constants (Giữ nguyên) ---
     const TYLE_PHI_THANH_TOAN_CO_DINH = 0.04;
@@ -355,13 +446,13 @@
     function clearErrors() { /* ... */ }
     function validateInput(inputElement, errorElement, message, allowZero = false, isPositive = false) { /* ... */ }
     function validateSelect(selectElement, errorElement, message) { /* ... */ }
-    // Update helpers (copy from previous response)
-    function formatCurrency(value) { /* ... */ }
+    // Update helper functions (copy from V6)
+     function formatCurrency(value) { /* ... */ }
     function clearErrors() { /* ... */ }
     function validateInput(inputElement, errorElement, message, allowZero = false, isPositive = false) { /* ... */ }
     function validateSelect(selectElement, errorElement, message) { /* ... */ }
-     // Update helper functions (copy from previous response)
-     function formatCurrency(value) {
+     // Update helper functions (copy from V6)
+    function formatCurrency(value) {
         const numValue = Number(value);
         if (isNaN(numValue)) { return 'Lỗi'; }
         return Math.round(numValue).toLocaleString('vi-VN');
@@ -398,7 +489,11 @@
     function populateL1Dropdown() { /* ... */ }
     function updateL2Dropdown() { /* ... */ }
     function updateFeeDisplay() { /* ... */ }
-     // Update populate/update dropdown functions (copy from previous response)
+    // Update populate/update dropdown functions (copy from V6)
+     function populateL1Dropdown() { /* ... */ }
+    function updateL2Dropdown() { /* ... */ }
+    function updateFeeDisplay() { /* ... */ }
+     // Update populate/update dropdown functions (copy from V6)
      function populateL1Dropdown() {
         const l1Categories = [...new Set(categoryData.map(item => item.l1))].sort();
         l1Categories.forEach(l1 => {
@@ -433,91 +528,54 @@
             const category = categoryData.find(item => item.l1 === selectedL1 && item.l2 === selectedL2);
             if (category) {
                 phiCoDinhDisplay.textContent = `${category.fee.toFixed(1)}%`;
-                 tinhLoiNhuan();
+                 // Don't auto-calculate here, wait for button press
+                 // tinhLoiNhuan();
             } else { phiCoDinhDisplay.textContent = "Lỗi tìm phí"; }
         } else { phiCoDinhDisplay.textContent = "Chưa chọn ngành hàng"; }
     }
 
-    // --- Tooltip Logic ---
-    let currentTooltipTarget = null; // Keep track of the icon that triggered the tooltip
 
+    // --- Tooltip Logic (Giữ nguyên) ---
+    let currentTooltipTarget = null;
+    function showTooltip(iconElement) { /* ... (copy from V6) ... */ }
+    function hideTooltip() { /* ... (copy from V6) ... */ }
+     // Update Tooltip Logic (copy from V6)
     function showTooltip(iconElement) {
         const tooltipText = iconElement.getAttribute('data-tooltip');
-        if (!tooltipText || tooltipText.trim() === '') return; // No text, do nothing
-
-        // Update tooltip content
+        if (!tooltipText || tooltipText.trim() === '') return;
         tooltipBox.textContent = tooltipText;
-
-        // Position tooltip
         const iconRect = iconElement.getBoundingClientRect();
-        const tooltipRect = tooltipBox.getBoundingClientRect(); // Get initial size
-
-        // Calculate position (try to place above the icon)
-        let top = iconRect.top + window.scrollY - tooltipRect.height - 10; // 10px offset + arrow space
-        let left = iconRect.left + window.scrollX + (iconRect.width / 2) - (tooltipRect.width / 2);
-
-        // Adjust if too close to top edge
-        if (top < window.scrollY + 5) {
-            top = iconRect.bottom + window.scrollY + 10; // Place below instead
-        }
-
-        // Adjust if too close to left/right edges
-        if (left < window.scrollX + 5) {
-            left = window.scrollX + 5;
-        } else if (left + tooltipRect.width > window.innerWidth - 5) {
-            left = window.innerWidth - tooltipRect.width - 5;
-        }
-
+        const tooltipWidth = tooltipBox.offsetWidth; // Use offsetWidth after setting content
+        const tooltipHeight = tooltipBox.offsetHeight;
+        let top = iconRect.top + window.scrollY - tooltipHeight - 10; // Above
+        let left = iconRect.left + window.scrollX + (iconRect.width / 2) - (tooltipWidth / 2);
+        if (top < window.scrollY + 5) { top = iconRect.bottom + window.scrollY + 10; } // Below
+        if (left < window.scrollX + 5) { left = window.scrollX + 5; }
+        else if (left + tooltipWidth > document.documentElement.clientWidth - 5) { left = document.documentElement.clientWidth - tooltipWidth - 5; }
         tooltipBox.style.top = `${top}px`;
         tooltipBox.style.left = `${left}px`;
-
-        // Show tooltip
         tooltipBox.classList.add('visible');
         currentTooltipTarget = iconElement;
     }
-
     function hideTooltip() {
         tooltipBox.classList.remove('visible');
         currentTooltipTarget = null;
     }
 
-    // Event listener for icons (using event delegation on the container)
-    const container = document.querySelector('.container');
-    container.addEventListener('click', function(event) {
-        const target = event.target;
-        if (target.classList.contains('info-icon')) {
-            event.stopPropagation(); // Prevent document click handler below
-            if (target === currentTooltipTarget) {
-                // Clicked the same icon again, hide it
-                hideTooltip();
-            } else {
-                // Clicked a new icon (or first time)
-                hideTooltip(); // Hide any previous tooltip
-                showTooltip(target);
-            }
-        }
-    });
 
-    // Event listener to hide tooltip when clicking outside
-    document.addEventListener('click', function(event) {
-        // Check if the click was outside the tooltip *and* not on an info icon
-        if (currentTooltipTarget && !tooltipBox.contains(event.target) && !event.target.classList.contains('info-icon')) {
-            hideTooltip();
-        }
-    });
-
-
-    // --- Main Calculation Function (Logic updated in previous step) ---
+    // --- Main Calculation Function ---
     function tinhLoiNhuan() {
-        // ... (Calculation logic remains the same as V5) ...
-         // 1. Clear previous state
+        // 1. Clear previous state & hide result for animation
         clearErrors();
         ketQuaTrucTiepDiv.innerHTML = '';
-        ketQuaTrucTiepDiv.className = '';
+        ketQuaTrucTiepDiv.className = ''; // Reset result styles
+        ketQuaTrucTiepDiv.classList.remove('visible'); // Hide for animation
 
-        // 2. Validate ALL Inputs
+
+        // 2. Validate ALL Inputs (copy validation logic from V6)
         let formIsValid = true;
-        formIsValid &= validateInput(giaNhapInput, errorGiaNhap, "Giá nhập", true);
+        // ... (Copy all validation checks from V6's tinhLoiNhuan) ...
+         formIsValid &= validateInput(giaNhapInput, errorGiaNhap, "Giá nhập", true);
         formIsValid &= validateInput(giaBanInput, errorGiaBan, "Giá bán", false, true);
         formIsValid &= validateSelect(nganhHangL1Select, errorNganhHangL1, "Vui lòng chọn ngành hàng Cấp 1.");
         formIsValid &= validateSelect(nganhHangL2Select, errorNganhHangL2, "Vui lòng chọn ngành hàng Cấp 2.");
@@ -533,15 +591,16 @@
         formIsValid &= validateInput(tyLeHoanInput, errorTyLeHoan, "% Tỷ lệ hoàn", true);
         formIsValid &= validateInput(chiPhiXuLyHoanInput, errorXuLyHoan, "Chi phí xử lý hoàn", true);
 
+
         if (!formIsValid) {
              ketQuaTrucTiepDiv.textContent = 'Vui lòng kiểm tra lại các ô nhập liệu.';
-             ketQuaTrucTiepDiv.classList.add('result-negative');
+             ketQuaTrucTiepDiv.classList.add('result-negative', 'visible'); // Show error message immediately
             return;
         }
 
-        // 3. Get Validated Values
-        const giaNhap = parseFloat(giaNhapInput.value) || 0;
-        const giaBan = parseFloat(giaBanInput.value) || 0;
+        // 3. Get Validated Values (copy from V6)
+        const giaNhap = parseFloat(giaNhapInput.value) || 0; /* ... rest of get value logic ... */
+         const giaBan = parseFloat(giaBanInput.value) || 0;
         const selectedL1 = nganhHangL1Select.value;
         const selectedL2 = nganhHangL2Select.value;
         const categoryInfo = categoryData.find(item => item.l1 === selectedL1 && item.l2 === selectedL2);
@@ -559,9 +618,10 @@
         const tyLeHoan = (parseFloat(tyLeHoanInput.value) || 0) / 100;
         const chiPhiXuLyHoan = parseFloat(chiPhiXuLyHoanInput.value) || 0;
 
-        // --- Calculations ---
-        const cpPhiCoDinh = giaBan * tyLePhiCoDinh;
-        const cpPhiThanhToan = giaBan * TYLE_PHI_THANH_TOAN_CO_DINH;
+
+        // --- Calculations (copy from V6) ---
+        const cpPhiCoDinh = giaBan * tyLePhiCoDinh; /* ... rest of calculation logic ... */
+         const cpPhiThanhToan = giaBan * TYLE_PHI_THANH_TOAN_CO_DINH;
         const cpThue = giaBan * tyLeThue;
         const cpQuangCao = giaBan * phanTramQuangCao;
         const cpVatQuangCao = cpQuangCao * TYLE_VAT_QUANG_CAO;
@@ -577,20 +637,72 @@
         const tongChiPhiTruGiaNhap = cpPhiCoDinh + cpPhiThanhToan + cpThue + cpQuangCao + cpVatQuangCao + cpAffiliate + cpVoucher + cpMktKhacPercent + cpVanHanh + cpBatThuong + cpVX + cpDongGoi + cpMktCoDinh + cpHoanTrungBinh;
         const tongChiPhiBaoGomGiaGoc = tongChiPhiTruGiaNhap + giaNhap;
         const loiNhuan = giaBan - tongChiPhiBaoGomGiaGoc;
+        const tySuatLoiNhuan = giaBan > 0 ? (loiNhuan / giaBan) * 100 : 0; // Calculate profit margin %
+
 
         // --- Display Result ---
-        let resultHTML = ''; let resultClass = ''; let colorClass = '';
-        if (loiNhuan > 0) { resultClass = 'result-positive'; colorClass = 'positive'; resultHTML = `Lợi nhuận ước tính: <span class="${colorClass}">${formatCurrency(loiNhuan)}</span> VNĐ`;
-        } else if (loiNhuan < 0) { resultClass = 'result-negative'; colorClass = 'negative'; resultHTML = `Lỗ ước tính: <span class="${colorClass}">${formatCurrency(loiNhuan)}</span> VNĐ`;
-        } else { resultClass = 'result-zero'; colorClass = 'zero'; resultHTML = `Hòa vốn ước tính: <span class="${colorClass}">${formatCurrency(loiNhuan)}</span> VNĐ`; }
-        resultHTML += `<br><small style="color: var(--text-color-light); font-size: 0.9em;">(Tổng chi phí/đơn: ${formatCurrency(tongChiPhiBaoGomGiaGoc)} VNĐ | Phí cố định: ${ (tyLePhiCoDinh * 100).toFixed(1) }%)</small>`;
+        let resultText = '';
+        let resultClass = '';
+        let colorClass = '';
+
+        if (loiNhuan > 0) {
+            resultClass = 'result-positive';
+            colorClass = 'positive';
+            resultText = `Lợi nhuận ước tính:`;
+        } else if (loiNhuan < 0) {
+            resultClass = 'result-negative';
+            colorClass = 'negative';
+            resultText = `Lỗ ước tính:`;
+        } else {
+            resultClass = 'result-zero';
+            colorClass = 'zero';
+            resultText = `Hòa vốn ước tính:`;
+        }
+
+         // Format result with improved layout
+         ketQuaTrucTiepDiv.innerHTML = `
+            ${resultText}
+            <span class="${colorClass}">${formatCurrency(loiNhuan)} VNĐ</span>
+            <span class="sub-info">
+                Tỷ suất lợi nhuận: ${tySuatLoiNhuan.toFixed(2)}% |
+                Tổng chi phí/đơn: ${formatCurrency(tongChiPhiBaoGomGiaGoc)} VNĐ |
+                Phí cố định: ${(tyLePhiCoDinh * 100).toFixed(1)}%
+            </span>
+        `;
         ketQuaTrucTiepDiv.classList.add(resultClass);
-        ketQuaTrucTiepDiv.innerHTML = resultHTML;
+
+        // Trigger animation
+        // Use setTimeout to ensure the 'visible' class is added after the initial state
+        setTimeout(() => {
+             ketQuaTrucTiepDiv.classList.add('visible');
+        }, 10); // Small delay
     }
 
-    // --- Attach Initial Event Listeners ---
+    // --- Attach Event Listeners ---
+    document.addEventListener('DOMContentLoaded', populateL1Dropdown);
+    nganhHangL1Select.addEventListener('change', updateL2Dropdown);
+    nganhHangL2Select.addEventListener('change', updateFeeDisplay); // Update fee display, calculation on button press
+    useVoucherXtraCheckbox.addEventListener('change', tinhLoiNhuan); // Recalculate if VX changes
     tinhToanBtn.addEventListener('click', tinhLoiNhuan);
-    const allInputsAndSelects = document.querySelectorAll('input[type="number"], input[type="checkbox"], select');
+
+    // Tooltip listeners (copy from V6)
+     const container = document.querySelector('.container');
+    container.addEventListener('click', function(event) {
+        const target = event.target;
+        if (target.classList.contains('info-icon')) {
+            event.stopPropagation();
+            if (target === currentTooltipTarget) { hideTooltip(); }
+            else { hideTooltip(); showTooltip(target); }
+        }
+    });
+    document.addEventListener('click', function(event) {
+        if (currentTooltipTarget && !tooltipBox.contains(event.target) && !event.target.classList.contains('info-icon')) {
+            hideTooltip();
+        }
+    });
+
+    // Enter key listener
+    const allInputsAndSelects = document.querySelectorAll('input[type="number"], select');
     allInputsAndSelects.forEach(input => {
          if(input.type === 'number') { input.addEventListener('keypress', function(event) { if (event.key === 'Enter') { event.preventDefault(); tinhToanBtn.click(); } }); }
     });
